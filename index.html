@@ -2,254 +2,402 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#070b13">
-<title>AXM APK Inspector — Laporan APK</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APK Security Report - Pro</title>
 <style>
-:root{--bg:#070b13;--panel:#0d1421;--panel2:#101b2b;--line:#1e3448;--cyan:#00d9ff;--green:#3df5a4;--purple:#b47aff;--muted:#91a5ba;--text:#edf7ff;--red:#ff6b81}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 15% 0%,#102a40 0,transparent 38%),radial-gradient(ellipse at 100% 30%,#17123a 0,transparent 32%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
-.wrap{max-width:1080px;margin:auto;padding:22px 16px 48px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}
-.brand{display:flex;align-items:center;gap:11px}
-.logo{width:44px;height:44px;border:1px solid #00d9ff80;border-radius:14px;display:grid;place-items:center;color:var(--cyan);font-weight:900;font-size:18px;box-shadow:0 0 25px #00d9ff20}
-.brand b{letter-spacing:1.4px}
-.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:1.5px}
-.pill{border:1px solid #31516a;border-radius:99px;padding:6px 10px;color:#b9d6e9;font-size:11px;white-space:nowrap}
+    :root {
+        --bg-color: #0b1120;
+        --card-bg: #111827;
+        --border-color: #1f2937;
+        --text-main: #f3f4f6;
+        --text-muted: #9ca3af;
+        --accent-cyan: #22d3ee;
+        --accent-green: #34d399;
+        --status-bg: #1f2937;
+    }
 
-.hero{padding:27px 22px;border:1px solid #1a4960;border-radius:22px;background:linear-gradient(120deg,#0c1a2aee,#101126ee);position:relative;overflow:hidden;box-shadow:0 20px 60px #0005}
-.hero:after{content:"";position:absolute;width:210px;height:210px;right:-80px;top:-100px;border-radius:50%;border:1px solid #00d9ff55;box-shadow:0 0 0 25px #00d9ff08,0 0 0 55px #00d9ff05}
-.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:2px}
-.hero h1{font-size:clamp(28px,5vw,45px);line-height:1.08;margin:10px 0}
-.hero h1 span{color:var(--cyan)}
-.hero p{color:#a9bdcf;max-width:620px;margin:0}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-button,.btn{border:0;border-radius:12px;padding:12px 16px;font:700 13px system-ui;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition: 0.2s;}
-button:hover,.btn:hover{filter: brightness(1.1); transform: translateY(-1px);}
-.primary{background:linear-gradient(100deg,var(--cyan),#57f2c0);color:#06101a}
-.secondary{background:#142338;color:#dff6ff;border:1px solid #294b65}
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        min-height: 100vh;
+    }
 
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:16px 0}
-.stat,.card{background:linear-gradient(150deg,#0e1827,#0a111d);border:1px solid var(--line);border-radius:17px;padding:17px}
-.stat .ico{font-size:20px}
-.stat small{display:block;color:var(--muted);margin-top:7px}
-.stat strong{display:block;font-size:18px;margin-top:3px;color:var(--cyan)}
+    .container {
+        width: 100%;
+        max-width: 480px; /* Lebar maksimal menyerupai HP */
+    }
 
-.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:24px 2px 12px}
-.section-title h2{font-size:17px;margin:0}
-.section-title span{font-size:11px;color:var(--muted)}
+    /* Bagian Upload (Awal) */
+    .upload-section {
+        background: var(--card-bg);
+        border: 2px dashed var(--border-color);
+        border-radius: 16px;
+        padding: 40px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 50px;
+    }
 
-.upload{border:1px dashed #27708a;background:#091522;border-radius:18px;padding:40px 23px;text-align:center;cursor:pointer;transition:.2s}
-.upload:hover,.upload.drag{border-color:var(--cyan);background:#0c2030}
-.upload .big{font-size:34px}
-.upload h3{margin:8px 0 4px}
-.upload p{margin:0;color:var(--muted);font-size:13px}
+    .upload-section:hover {
+        border-color: var(--accent-cyan);
+        background: #172033;
+    }
 
-/* SCANNING ANIMATION CSS */
-.scanning-ui { display: none; text-align: center; padding: 40px 20px; border: 1px solid var(--line); background:#091522; border-radius: 18px; }
-.spinner { width: 60px; height: 60px; border: 4px solid #14253a; border-top-color: var(--cyan); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
-@keyframes spin { 100% { transform: rotate(360deg); } }
-.scan-status-text { font-size: 16px; font-weight: bold; color: var(--cyan); letter-spacing: 1px; animation: pulse 1.5s infinite; }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-.scan-progress-bar { width: 100%; max-width: 300px; height: 6px; background: #14253a; border-radius: 10px; margin: 15px auto 0; overflow: hidden; }
-.scan-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--green)); transition: width 0.3s ease; }
+    .upload-icon {
+        font-size: 40px;
+        margin-bottom: 10px;
+        color: var(--accent-cyan);
+    }
 
-.results{display:none}
-.result-head{display:flex;align-items:center;gap:12px}
-.appicon{width:54px;height:54px;border-radius:14px;background:#14253a;display:grid;place-items:center;font-size:26px;border:1px solid #284b64}
-.result-head h3{margin:0; color: var(--text)}
-.result-head p{margin:2px 0;color:var(--muted);font-size:12px}
-.tag{display:inline-block;border-radius:99px;padding:4px 9px;font-size:11px;background:#17283a;color:#9fc5dc;border:1px solid #2c4a62}
-.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
-.check{border:1px solid var(--line);border-radius:13px;padding:15px;background:#0b1420}
-.check strong{display:block;font-size:15px; margin-top: 4px;}
-.check p{font-size:12px;color:var(--muted);margin:5px 0 0}
-.status{font-size:10px;color:var(--cyan);font-weight:800;letter-spacing:.5px}
-.success-text { color: var(--green) !important; }
+    .upload-text {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
 
-.foot{color:#657e93;text-align:center;font-size:11px;margin-top:40px; margin-bottom: 20px;}
-@media(max-width:650px){.grid{grid-template-columns:1fr}.checks{grid-template-columns:1fr}}
+    .upload-subtext {
+        font-size: 13px;
+        color: var(--text-muted);
+    }
+
+    /* Bagian Laporan (Disembunyikan awalnya) */
+    .report-section {
+        display: none;
+        background: var(--card-bg);
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .report-header {
+        padding: 20px;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .header-icon {
+        width: 36px;
+        height: 36px;
+        background: rgba(34, 211, 238, 0.1);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-cyan);
+        font-size: 18px;
+    }
+
+    .header-titles h1 {
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: var(--accent-cyan);
+    }
+
+    .header-titles p {
+        font-size: 11px;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+    }
+
+    /* Detail File APK */
+    .file-info {
+        padding: 20px;
+        background: #0f1523;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .file-name {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        word-break: break-all;
+    }
+
+    .file-size {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    /* List Hasil Scan */
+    .scan-list {
+        padding: 10px 20px 20px;
+    }
+
+    .scan-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .scan-item:last-child {
+        border-bottom: none;
+    }
+
+    .scan-details h3 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .scan-details p {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    /* Badge Status */
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 99px;
+        font-size: 12px;
+        font-weight: 600;
+        background: var(--status-bg);
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.3s ease;
+    }
+
+    /* Animasi Loading */
+    .loading-spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid transparent;
+        border-top-color: var(--accent-cyan);
+        border-right-color: var(--accent-cyan);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+    }
+
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Status Selesai (Sukses) */
+    .status-success {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--accent-green);
+        border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+
+    .report-footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 11px;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .report-footer span {
+        color: var(--accent-cyan);
+        font-weight: 600;
+    }
+
+    .reset-btn {
+        display: none;
+        width: 100%;
+        margin-top: 20px;
+        padding: 14px;
+        background: linear-gradient(135deg, var(--accent-cyan), #0284c7);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+    
+    .reset-btn:hover {
+        opacity: 0.9;
+    }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="top">
-    <div class="brand"><div class="logo">AX</div><div><b>AXM SYSTEM</b><small>APK INSPECTOR BOTS</small></div></div>
-    <div class="pill">● SCANNER AKTIF</div>
-  </header>
-  
-  <section class="hero">
-    <div class="eyebrow">APK SCANNER ENGINE</div>
-    <h1>Inspeksi Cepat.<br><span>Keamanan Terjamin.</span></h1>
-    <p>Upload file APK Anda untuk dipindai secara menyeluruh. Sistem akan mengecek arsitektur, virus, stabilitas, dan keberadaan iklan di dalam aplikasi.</p>
-  </section>
 
-  <div class="grid">
-    <div class="stat"><div class="ico">◈</div><div><small>ARSITEKTUR</small><strong id="statAbi">Menunggu File</strong></div></div>
-    <div class="stat"><div class="ico">⌁</div><div><small>STATUS VIRUS</small><strong id="statVirus">Menunggu File</strong></div></div>
-    <div class="stat"><div class="ico">▣</div><div><small>STATUS IKLAN</small><strong id="statAds">Menunggu File</strong></div></div>
-  </div>
-
-  <div class="section-title"><h2>Pilih APK untuk dipindai</h2><span>Mendukung semua format .apk</span></div>
-  
-  <!-- Upload Area -->
-  <div class="upload" id="dropzone" onclick="document.getElementById('apkfile').click()">
-    <div class="big">⇧</div><h3>Ketuk atau Tarik File APK Kesini</h3>
-    <p>File tidak diunggah ke server, diproses di perangkat Anda.</p>
-    <input id="apkfile" type="file" accept=".apk,application/vnd.android.package-archive" hidden>
-  </div>
-
-  <!-- Scanning Animation (Hidden by default) -->
-  <div class="scanning-ui" id="scanningUI">
-    <div class="spinner"></div>
-    <div class="scan-status-text" id="scanText">Memulai pemindaian...</div>
-    <div class="scan-progress-bar">
-        <div class="scan-progress-fill" id="scanFill"></div>
+<div class="container">
+    <!-- Area Upload -->
+    <div class="upload-section" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-icon">🛡️</div>
+        <div class="upload-text">Pilih File APK</div>
+        <div class="upload-subtext">Ketuk untuk memulai proses pemindaian</div>
+        <input type="file" id="fileInput" accept=".apk" style="display: none;">
     </div>
-  </div>
 
-  <!-- Results Area (Hidden by default) -->
-  <div id="results" class="results">
-    <div class="section-title"><h2>Laporan Pemindaian Selesai</h2><span id="scanTime"></span></div>
-    <section class="card">
-      <div class="result-head">
-        <div class="appicon">✓</div>
-        <div>
-          <h3 id="fileName">Nama APK</h3>
-          <p id="fileSize">Ukuran: -</p>
-          <span class="tag">HASIL PEMINDAIAN BERHASIL</span>
+    <!-- Area Laporan (Muncul setelah upload) -->
+    <div class="report-section" id="reportArea">
+        <div class="report-header">
+            <div class="header-icon">🛡️</div>
+            <div class="header-titles">
+                <h1>APK SECURITY REPORT</h1>
+                <p>ANKRAIXMOTION · SYSTEM REPORT</p>
+            </div>
         </div>
-      </div>
-      
-      <div class="checks">
-        <div class="check">
-          <span class="status">ARSITEKTUR CPU</span>
-          <strong class="success-text">Support (64-bit & 32-bit)</strong>
-          <p>Aplikasi ini mendukung perangkat arm64-v8a dan armeabi-v7a.</p>
-        </div>
-        <div class="check">
-          <span class="status">VIRUS / MALWARE</span>
-          <strong class="success-text">Tidak Ada (Aman)</strong>
-          <p>File bersih dari trojan, spyware, dan kode berbahaya.</p>
-        </div>
-        <div class="check">
-          <span class="status">STABILITAS APLIKASI</span>
-          <strong class="success-text">Bekerja - Ya</strong>
-          <p>Aplikasi berfungsi dengan normal dan tidak terdeteksi crash.</p>
-        </div>
-        <div class="check">
-          <span class="status">DETEKSI IKLAN</span>
-          <strong class="success-text">Tidak Ada Iklan</strong>
-          <p>Sistem tidak mendeteksi modul iklan (AdMob, UnityAds, dll).</p>
-        </div>
-      </div>
-      
-      <div class="hero-actions" style="margin-top:20px;">
-        <button class="primary" onclick="resetScanner()">⟲ Scan Ulang APK Lain</button>
-      </div>
-    </section>
-  </div>
 
-  <div class="foot">ANKRAIXMOTION © · Laporan Simulasi Pemindaian (Fake Scan Engine)</div>
+        <div class="file-info">
+            <div class="file-name" id="displayFileName">nama_aplikasi.apk</div>
+            <div class="file-size" id="displayFileSize">Ukuran File: --</div>
+        </div>
+
+        <div class="scan-list">
+            <!-- Item 1: Arsitektur -->
+            <div class="scan-item">
+                <div class="scan-details">
+                    <h3>Architecture CPU</h3>
+                    <p>32-bit / 64-bit compatibility</p>
+                </div>
+                <div class="status-badge" id="status1">
+                    <span class="loading-spinner"></span> Scanning...
+                </div>
+            </div>
+
+            <!-- Item 2: Virus -->
+            <div class="scan-item">
+                <div class="scan-details">
+                    <h3>Virus Scan</h3>
+                    <p>Malware & Trojan detection</p>
+                </div>
+                <div class="status-badge" id="status2">
+                    Menunggu...
+                </div>
+            </div>
+
+            <!-- Item 3: Stabilitas/Runtime -->
+            <div class="scan-item">
+                <div class="scan-details">
+                    <h3>Runtime Test</h3>
+                    <p>App stability & working status</p>
+                </div>
+                <div class="status-badge" id="status3">
+                    Menunggu...
+                </div>
+            </div>
+
+            <!-- Item 4: Iklan -->
+            <div class="scan-item">
+                <div class="scan-details">
+                    <h3>Ads Detection</h3>
+                    <p>Hidden ads module</p>
+                </div>
+                <div class="status-badge" id="status4">
+                    Menunggu...
+                </div>
+            </div>
+        </div>
+
+        <div class="report-footer">
+            <span>SCAN</span> · ANALYZE · VERIFY<br>
+            <div style="margin-top:4px; font-size:9px; color:#6b7280;">Laporan simulasi - bukan sertifikat keamanan resmi</div>
+        </div>
+    </div>
+
+    <button class="reset-btn" id="resetBtn" onclick="resetApp()">↻ Scan APK Lain</button>
+
 </div>
 
 <script>
-const input = document.getElementById('apkfile');
-const zone = document.getElementById('dropzone');
-const scannerUI = document.getElementById('scanningUI');
-const resultsUI = document.getElementById('results');
+    const fileInput = document.getElementById('fileInput');
+    const uploadArea = document.getElementById('uploadArea');
+    const reportArea = document.getElementById('reportArea');
+    const resetBtn = document.getElementById('resetBtn');
 
-// Event listeners untuk input file
-input.addEventListener('change', () => {
-    if(input.files && input.files[0]) runFakeScan(input.files[0]);
-});
-
-// Drag and drop effects
-zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag') });
-zone.addEventListener('dragleave', () => zone.classList.remove('drag') );
-zone.addEventListener('drop', e => {
-    e.preventDefault(); 
-    zone.classList.remove('drag');
-    const f = e.dataTransfer.files[0];
-    if(f && f.name.toLowerCase().endsWith('.apk')) runFakeScan(f);
-    else alert('Harap pilih file dengan ekstensi .apk');
-});
-
-function fmtSize(bytes) {
-    if(bytes < 1024) return bytes + ' B';
-    if(bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / 1048576).toFixed(2) + ' MB';
-}
-
-async function runFakeScan(file) {
-    if(!file.name.toLowerCase().endsWith('.apk')) {
-        alert('Pilih file APK yang valid.'); 
-        return;
-    }
-
-    // Reset UI state
-    zone.style.display = 'none';
-    resultsUI.style.display = 'none';
-    scannerUI.style.display = 'block';
-    
-    // Tampilkan detail file di result nanti
-    document.getElementById('fileName').textContent = file.name;
-    document.getElementById('fileSize').textContent = 'Ukuran File: ' + fmtSize(file.size);
-    document.getElementById('scanTime').textContent = new Date().toLocaleTimeString('id-ID');
-
-    // Langkah-langkah animasi scanning bohongan
-    const scanSteps = [
-        "Mengekstrak file APK...",
-        "Memeriksa arsitektur 64-bit dan 32-bit...",
-        "Memindai database virus dan malware...",
-        "Menyimulasikan jalannya aplikasi...",
-        "Menganalisis skrip iklan tersembunyi...",
-        "Menyusun laporan akhir..."
+    // Data hasil akhir (Hardcode sesuai permintaan)
+    const finalResults = [
+        "Support (64-32 bit)",
+        "Tidak Ada (Aman)",
+        "Bekerja - Ya",
+        "Tidak Ada Iklan"
     ];
 
-    const scanText = document.getElementById('scanText');
-    const scanFill = document.getElementById('scanFill');
-    
-    // Looping animasi
-    for(let i = 0; i < scanSteps.length; i++) {
-        scanText.textContent = scanSteps[i];
-        scanFill.style.width = ((i + 1) / scanSteps.length) * 100 + "%";
-        
-        // Delay bohongan (acak antara 600ms - 1.2 detik per proses agar terlihat nyata)
-        const delay = Math.floor(Math.random() * 600) + 600; 
-        await new Promise(r => setTimeout(r, delay));
+    fileInput.addEventListener('change', function() {
+        if(this.files && this.files[0]) {
+            startFakeScan(this.files[0]);
+        }
+    });
+
+    function formatBytes(bytes) {
+        if(bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    // Selesai scanning, tampilkan hasil
-    scannerUI.style.display = 'none';
-    resultsUI.style.display = 'block';
+    async function startFakeScan(file) {
+        // Tampilkan info file
+        document.getElementById('displayFileName').textContent = file.name;
+        document.getElementById('displayFileSize').textContent = "Ukuran File: " + formatBytes(file.size);
 
-    // Update bagian header stats
-    document.getElementById('statAbi').textContent = "Support 64/32-bit";
-    document.getElementById('statVirus').textContent = "Aman (0 Terdeteksi)";
-    document.getElementById('statAds').textContent = "Bebas Iklan";
-    document.getElementById('statAds').style.color = "var(--green)";
-    document.getElementById('statVirus').style.color = "var(--green)";
-    document.getElementById('statAbi').style.color = "var(--green)";
+        // Ubah tampilan UI
+        uploadArea.style.display = 'none';
+        reportArea.style.display = 'block';
+        resetBtn.style.display = 'none';
 
-    resultsUI.scrollIntoView({behavior:'smooth',block:'start'});
-}
+        // Reset semua badge ke default (Menunggu)
+        for(let i=1; i<=4; i++) {
+            const badge = document.getElementById('status'+i);
+            badge.className = 'status-badge';
+            if(i === 1) {
+                badge.innerHTML = '<span class="loading-spinner"></span> Scanning...';
+            } else {
+                badge.innerHTML = 'Menunggu...';
+            }
+        }
 
-function resetScanner() {
-    input.value = ""; // Bersihkan file input
-    document.getElementById('results').style.display = 'none';
-    document.getElementById('dropzone').style.display = 'block';
-    
-    document.getElementById('statAbi').textContent = "Menunggu File";
-    document.getElementById('statVirus').textContent = "Menunggu File";
-    document.getElementById('statAds').textContent = "Menunggu File";
-    document.getElementById('statAds').style.color = "var(--cyan)";
-    document.getElementById('statVirus').style.color = "var(--cyan)";
-    document.getElementById('statAbi').style.color = "var(--cyan)";
-    
-    window.scrollTo({top: 0, behavior: 'smooth'});
-}
+        // Proses simulasi per item berurutan
+        for (let i = 1; i <= 4; i++) {
+            const currentBadge = document.getElementById('status' + i);
+            
+            // Set ke state loading
+            currentBadge.innerHTML = '<span class="loading-spinner"></span> Scanning...';
+            currentBadge.style.color = 'var(--accent-cyan)';
+            
+            // Tunggu beberapa detik (acak antara 1 - 2 detik per item)
+            const delay = Math.floor(Math.random() * 1000) + 1000;
+            await new Promise(r => setTimeout(r, delay));
+
+            // Set ke state selesai (Sukses)
+            currentBadge.className = 'status-badge status-success';
+            currentBadge.innerHTML = finalResults[i-1];
+            currentBadge.style.color = ''; // kembalikan ke warna css class
+
+            // Jika bukan item terakhir, aktifkan loading di item berikutnya
+            if (i < 4) {
+                 const nextBadge = document.getElementById('status' + (i+1));
+                 nextBadge.innerHTML = '<span class="loading-spinner"></span> Bersiap...';
+            }
+        }
+
+        // Tampilkan tombol reset setelah semua selesai
+        resetBtn.style.display = 'block';
+    }
+
+    function resetApp() {
+        fileInput.value = ''; // Clear file
+        reportArea.style.display = 'none';
+        resetBtn.style.display = 'none';
+        uploadArea.style.display = 'block';
+    }
 </script>
+
 </body>
 </html>

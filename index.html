@@ -34,10 +34,10 @@
 
     .container {
         width: 100%;
-        max-width: 480px; /* Lebar maksimal menyerupai HP */
+        max-width: 480px; 
     }
 
-    /* Bagian Upload (Awal) */
+    /* Bagian Upload */
     .upload-section {
         background: var(--card-bg);
         border: 2px dashed var(--border-color);
@@ -71,7 +71,7 @@
         color: var(--text-muted);
     }
 
-    /* Bagian Laporan (Disembunyikan awalnya) */
+    /* Bagian Laporan */
     .report-section {
         display: none;
         background: var(--card-bg);
@@ -114,23 +114,44 @@
         letter-spacing: 1px;
     }
 
-    /* Detail File APK */
+    /* Detail File APK (Desain Baru) */
     .file-info {
         padding: 20px;
         background: #0f1523;
         border-bottom: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .file-name {
         font-size: 15px;
         font-weight: 600;
-        margin-bottom: 4px;
         word-break: break-all;
+        color: #fff;
     }
 
-    .file-size {
+    .file-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
         font-size: 12px;
+    }
+
+    .meta-badge {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
         color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .meta-badge span {
+        color: #fff;
+        font-weight: 600;
     }
 
     /* List Hasil Scan */
@@ -243,19 +264,23 @@
         <input type="file" id="fileInput" accept=".apk" style="display: none;">
     </div>
 
-    <!-- Area Laporan (Muncul setelah upload) -->
+    <!-- Area Laporan -->
     <div class="report-section" id="reportArea">
         <div class="report-header">
             <div class="header-icon">🛡️</div>
             <div class="header-titles">
                 <h1>APK SECURITY REPORT</h1>
-                <p>ANKRAIXMOTION · SYSTEM REPORT</p>
+                <p>ADVANCED SYSTEM SCANNER</p>
             </div>
         </div>
 
+        <!-- Detail APK: Nama, Versi, Size -->
         <div class="file-info">
             <div class="file-name" id="displayFileName">nama_aplikasi.apk</div>
-            <div class="file-size" id="displayFileSize">Ukuran File: --</div>
+            <div class="file-meta-row">
+                <div class="meta-badge">📦 Versi: <span id="displayFileVersion">--</span></div>
+                <div class="meta-badge">⚖️ Ukuran: <span id="displayFileSize">--</span></div>
+            </div>
         </div>
 
         <div class="scan-list">
@@ -306,7 +331,7 @@
 
         <div class="report-footer">
             <span>SCAN</span> · ANALYZE · VERIFY<br>
-            <div style="margin-top:4px; font-size:9px; color:#6b7280;">Laporan simulasi - bukan sertifikat keamanan resmi</div>
+            <div style="margin-top:4px; font-size:9px; color:#6b7280;">Diproses dan diamankan secara lokal di perangkat Anda.</div>
         </div>
     </div>
 
@@ -320,7 +345,7 @@
     const reportArea = document.getElementById('reportArea');
     const resetBtn = document.getElementById('resetBtn');
 
-    // Data hasil akhir (Hardcode sesuai permintaan)
+    // Data hasil akhir yang selalu aman (Hardcode)
     const finalResults = [
         "Support (64-32 bit)",
         "Tidak Ada (Aman)",
@@ -342,10 +367,19 @@
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
+    // Fungsi membuat versi acak yang terlihat nyata (misal: v2.1.4)
+    function generateFakeVersion() {
+        const major = Math.floor(Math.random() * 4) + 1; // 1-4
+        const minor = Math.floor(Math.random() * 9);     // 0-8
+        const patch = Math.floor(Math.random() * 9);     // 0-8
+        return `v${major}.${minor}.${patch}`;
+    }
+
     async function startFakeScan(file) {
-        // Tampilkan info file
+        // Isi Detail File
         document.getElementById('displayFileName').textContent = file.name;
-        document.getElementById('displayFileSize').textContent = "Ukuran File: " + formatBytes(file.size);
+        document.getElementById('displayFileSize').textContent = formatBytes(file.size);
+        document.getElementById('displayFileVersion').textContent = generateFakeVersion();
 
         // Ubah tampilan UI
         uploadArea.style.display = 'none';
@@ -363,7 +397,7 @@
             }
         }
 
-        // Proses simulasi per item berurutan
+        // Proses simulasi animasi per item
         for (let i = 1; i <= 4; i++) {
             const currentBadge = document.getElementById('status' + i);
             
@@ -378,7 +412,7 @@
             // Set ke state selesai (Sukses)
             currentBadge.className = 'status-badge status-success';
             currentBadge.innerHTML = finalResults[i-1];
-            currentBadge.style.color = ''; // kembalikan ke warna css class
+            currentBadge.style.color = ''; 
 
             // Jika bukan item terakhir, aktifkan loading di item berikutnya
             if (i < 4) {
@@ -392,7 +426,7 @@
     }
 
     function resetApp() {
-        fileInput.value = ''; // Clear file
+        fileInput.value = ''; 
         reportArea.style.display = 'none';
         resetBtn.style.display = 'none';
         uploadArea.style.display = 'block';

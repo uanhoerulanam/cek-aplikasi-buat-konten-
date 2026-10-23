@@ -129,17 +129,11 @@
         display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer;
     }
     
-    /* Styling gambar dasar */
+    /* Modifikasi CSS: object-fit cover agar gambar JPG dari GitHub terlihat penuh seperti ikon aplikasi */
     .app-item img {
-        width: 52px; height: 52px; border-radius: 14px; margin-bottom: 8px; object-fit: contain;
-        background: #1a2234; padding: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        width: 52px; height: 52px; border-radius: 14px; margin-bottom: 8px; object-fit: cover;
+        background: #1a2234; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    /* KHUSUS GOJEK: Kita paksa background-nya jadi warna hijau Gojek */
-    .app-item img[alt="Gojek"] {
-        background-color: #00aa13 !important;
-        padding: 8px;
     }
 
     .app-item span { font-size: 11px; color: #f3f4f6; word-break: break-word; line-height: 1.2; font-weight: 500;}
@@ -301,11 +295,7 @@
 </div>
 
 <script>
-    /*
-      CATATAN PENTING:
-      Beberapa logo di bawah ini menggunakan server gambar pihak ketiga yang sudah 
-      disesuaikan semirip mungkin dengan gambar yang kamu kirim.
-    */
+    // LOGO GOJEK, PUBG, MLBB, DAN FF SUDAH DIAMBIL LANGSUNG DARI REPO GITHUB KAMU
     const appData = [
         { name: "YouTube", icon: "https://www.google.com/s2/favicons?domain=youtube.com&sz=128", size: "85.2 MB", version: "v18.43.45" },
         { name: "WhatsApp", icon: "https://img.icons8.com/color/512/whatsapp.png", size: "45.1 MB", version: "v2.23.23.76" },
@@ -315,18 +305,11 @@
         { name: "Instagram", icon: "https://www.google.com/s2/favicons?domain=instagram.com&sz=128", size: "54.9 MB", version: "v306.0.0" },
         { name: "Chrome", icon: "https://www.google.com/s2/favicons?domain=google.com/chrome&sz=128", size: "15.3 MB", version: "v119.0.6045" },
         
-        // --- LOGO GAME & APLIKASI YANG KAMU MINTA ---
-        // Gojek: Link logo transparan, background hijau diatur lewat CSS di atas.
-        { name: "Gojek", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gojek_logo_2022.svg/512px-Gojek_logo_2022.svg.png", size: "75.3 MB", version: "v4.45" },
-        
-        // PUBG: Pakai logo karakter helm resolusi tinggi.
-        { name: "PUBG Mobile", icon: "https://cdn.iconscout.com/icon/free/png-256/free-pubg-mobile-logo-icon-download-in-svg-png-gif-file-formats--technology-game-apps-logos-pack-icons-4952527.png", size: "780.0 MB", version: "v2.9.0" },
-        
-        // MLBB: Pakai logo Miya 5v5 resolusi tinggi.
-        { name: "Mobile Legends", icon: "https://cdn.iconscout.com/icon/free/png-256/free-mobile-legends-bang-bang-logo-icon-download-in-svg-png-gif-file-formats--game-apps-logos-pack-icons-4952528.png", size: "520.4 MB", version: "v1.8.30" },
-        
-        // Free Fire: Pakai logo FF Resolusi tinggi.
-        { name: "Free Fire", icon: "https://cdn.iconscout.com/icon/free/png-256/free-free-fire-logo-icon-download-in-svg-png-gif-file-formats--game-apps-logos-pack-icons-4952529.png", size: "350.2 MB", version: "v1.102.1" },
+        // --- MENGGUNAKAN GAMBAR DARI GITHUB KAMU ---
+        { name: "Gojek", icon: "https://raw.githubusercontent.com/uanhoerulanam/cek-aplikasi-buat-konten-/main/Gojek.jpg", size: "75.3 MB", version: "v4.45" },
+        { name: "PUBG Mobile", icon: "https://raw.githubusercontent.com/uanhoerulanam/cek-aplikasi-buat-konten-/main/PUBG.jpg", size: "780.0 MB", version: "v2.9.0" },
+        { name: "Mobile Legends", icon: "https://raw.githubusercontent.com/uanhoerulanam/cek-aplikasi-buat-konten-/main/MLBB.jpg", size: "520.4 MB", version: "v1.8.30" },
+        { name: "Free Fire", icon: "https://raw.githubusercontent.com/uanhoerulanam/cek-aplikasi-buat-konten-/main/Free%20Fire.jpg", size: "350.2 MB", version: "v1.102.1" },
         
         // --- SISA APLIKASI ---
         { name: "CapCut", icon: "https://icon.horse/icon/capcut.com", size: "125.0 MB", version: "v9.6.0" },

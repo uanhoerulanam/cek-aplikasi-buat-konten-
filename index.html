@@ -101,11 +101,11 @@
     }
     .app-item span { font-size: 11px; color: #f3f4f6; word-break: break-word; line-height: 1.2; font-weight: 500;}
 
-    /* === SCANNER SCREEN (UPGRADED UI & ANIMATION) === */
+    /* === SCANNER SCREEN === */
     #scannerScreen { display: none; background-color: var(--dark-bg); min-height: 100vh; color: #f3f4f6; padding: 15px; }
     
     .scanner-card {
-        background: rgba(17, 24, 39, 0.85); /* Efek Kaca */
+        background: rgba(17, 24, 39, 0.85); 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-radius: 24px; 
@@ -147,7 +147,7 @@
     #dynamicAppIcon { 
         width: 60px; height: 60px; object-fit: contain; z-index: 1; border-radius: 12px; 
         background: #111827; padding: 4px; transition: all 0.5s ease;
-        animation: icon-pulse 2s infinite alternate; /* Animasi Ikon Bernafas */
+        animation: icon-pulse 2s infinite alternate;
     }
     
     /* Garis Laser */
@@ -169,15 +169,15 @@
         box-shadow: 0 0 30px rgba(52, 211, 153, 0.3), inset 0 0 20px rgba(52, 211, 153, 0.1);
     }
     .scanner-card.scan-success #dynamicAppIcon {
-        animation: none; /* Hentikan denyut */
-        transform: scale(0.9); /* Sedikit mengecil agar centang terlihat */
+        animation: none;
+        transform: scale(0.9);
         opacity: 0.5;
     }
     .scanner-card.scan-success .laser-line {
         display: none;
     }
     
-    /* Ikon Centang (Checkmark) yang muncul tiba-tiba */
+    /* Ikon Centang (Checkmark) */
     .success-checkmark {
         position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
         opacity: 0; transform: scale(0); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -200,11 +200,10 @@
     .scan-item { 
         display: flex; justify-content: space-between; align-items: center; 
         padding: 16px 0; border-bottom: 1px dashed rgba(255,255,255,0.08); gap: 15px;
-        opacity: 0; transform: translateY(10px); /* Untuk animasi muncul */
+        opacity: 0; transform: translateY(10px);
         transition: all 0.4s ease;
     }
     
-    /* Animasi Muncul Berurutan */
     .scan-item.visible { opacity: 1; transform: translateY(0); }
 
     .scan-item:last-child { border-bottom: none; }
@@ -310,7 +309,6 @@
                     <div class="laser-line" id="laserLine"></div>
                     <img id="dynamicAppIcon" src="" alt="App Icon">
                     
-                    <!-- Ikon Centang Animasi saat sukses -->
                     <div class="success-checkmark">
                         <svg viewBox="0 0 24 24">
                             <path d="M5 13l4 4L19 7"></path>
@@ -359,7 +357,8 @@
 </div>
 
 <script>
-    // LOGO GOJEK, PUBG, MLBB, DAN FF SUDAH DIAMBIL LANGSUNG DARI REPO GITHUB KAMU
+    // LOGO GOJEK, PUBG, MLBB, DAN FF DARI REPO GITHUB KAMU
+    // MT MANAGER DITAMBAHKAN DI SINI
     const appData = [
         { name: "YouTube", icon: "https://www.google.com/s2/favicons?domain=youtube.com&sz=128", size: "85.2 MB", version: "v18.43.45" },
         { name: "WhatsApp", icon: "https://img.icons8.com/color/512/whatsapp.png", size: "45.1 MB", version: "v2.23.23.76" },
@@ -369,7 +368,10 @@
         { name: "Instagram", icon: "https://www.google.com/s2/favicons?domain=instagram.com&sz=128", size: "54.9 MB", version: "v306.0.0" },
         { name: "Chrome", icon: "https://www.google.com/s2/favicons?domain=google.com/chrome&sz=128", size: "15.3 MB", version: "v119.0.6045" },
         
-        // --- MENGGUNAKAN GAMBAR DARI GITHUB KAMU ---
+        // --- MT MANAGER ---
+        { name: "MT Manager", icon: "https://cdn.iconscout.com/icon/free/png-256/free-mt-manager-logo-icon-download-in-svg-png-gif-file-formats--apk-editor-tool-apps-logos-pack-icons-4952530.png", size: "15.5 MB", version: "v2.14.5" },
+        
+        // --- GAMBAR DARI GITHUB KAMU ---
         { name: "Gojek", icon: "https://raw.githubusercontent.com/uanhoerulanam/cek-aplikasi-buat-konten-/main/Gojek.jpg", size: "75.3 MB", version: "v4.45" },
         { name: "PUBG Mobile", icon: "https://raw.githubusercontent.com/uanhoerulanam/cek-aplikasi-buat-konten-/main/PUBG.jpg", size: "780.0 MB", version: "v2.9.0" },
         { name: "Mobile Legends", icon: "https://raw.githubusercontent.com/uanhoerulanam/cek-aplikasi-buat-konten-/main/MLBB.jpg", size: "520.4 MB", version: "v1.8.30" },
@@ -446,7 +448,7 @@
         const mainScanStatus = document.getElementById('mainScanStatus');
         const engineStatus = document.getElementById('engineStatus');
         
-        // Reset state (kembalikan ke awal sebelum scan)
+        // Reset state
         scannerCard.classList.remove('scan-success');
         resetBtn.style.display = 'none';
         laserLine.style.display = 'block';
@@ -454,7 +456,6 @@
         engineStatus.textContent = "ENGINE ANALYSIS RUNNING...";
         engineStatus.style.color = "#9ca3af";
         
-        // Reset list items (sembunyikan dulu)
         for(let i=1; i<=7; i++) {
             document.getElementById('item'+i).classList.remove('visible');
         }
@@ -469,34 +470,32 @@
             document.getElementById('status'+i).innerHTML = 'Menunggu...';
         }
 
-        // Animasi muncul list pertama (Nama, Ukuran, Versi)
+        // Animasi muncul list pertama
         setTimeout(() => document.getElementById('item1').classList.add('visible'), 200);
         setTimeout(() => document.getElementById('item2').classList.add('visible'), 400);
         setTimeout(() => document.getElementById('item3').classList.add('visible'), 600);
 
-        // Proses Scan
+        // Proses Scan (Kecepatan diatur di sini)
         for (let i = 1; i <= 4; i++) {
             const badge = document.getElementById('status' + i);
-            const listItem = document.getElementById('item' + (i + 3)); // item4, item5, item6, item7
+            const listItem = document.getElementById('item' + (i + 3));
             
             badge.innerHTML = '<span class="loading-spinner"></span> Scanning...';
             badge.style.color = 'var(--cyan)';
             
             mainScanStatus.textContent = scanStatusMessages[i-1];
-            
-            // Tampilkan baris yang sedang discan
             listItem.classList.add('visible');
             
-            const delay = Math.floor(Math.random() * 600) + 1000; 
+            // DELAY: 1800ms - 2500ms (Pas, tidak terlalu cepat/lambat)
+            const delay = Math.floor(Math.random() * 700) + 1800; 
             await new Promise(r => setTimeout(r, delay));
 
-            // Ubah ke sukses
             badge.className = 'status-badge status-success';
             badge.innerHTML = finalResults[i-1];
         }
 
-        // ==== EFEK AKHIRAN (SUCCESS ANIMATION) ====
-        scannerCard.classList.add('scan-success'); // Memicu animasi centang & glow hijau
+        // Efek Akhiran
+        scannerCard.classList.add('scan-success');
         engineStatus.textContent = "ANALYSIS COMPLETE";
         engineStatus.style.color = "var(--green)";
         mainScanStatus.textContent = "✓ Pemindaian Selesai (Aman)";
@@ -504,7 +503,7 @@
         
         setTimeout(() => {
             resetBtn.style.display = 'block';
-        }, 800); // Tombol muncul setelah centang selesai tergambar
+        }, 800); 
     }
 </script>
 </body>

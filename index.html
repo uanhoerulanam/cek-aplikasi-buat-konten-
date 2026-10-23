@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>System App Scanner Pro</title>
 <style>
-    /* =========================================
-       GLOBAL RESET & VARIABEL TEMA
-       ========================================= */
     :root {
         --blue-primary: #1d4ed8;
         --blue-light: #3b82f6;
@@ -31,7 +28,6 @@
         overflow-x: hidden;
     }
 
-    /* Container Utama pembatas ukuran di PC agar tetap seperti HP */
     .app-container {
         width: 100%;
         max-width: 480px;
@@ -43,9 +39,6 @@
         overflow: hidden;
     }
 
-    /* =========================================
-       SCREEN 1: HOME (DASHBOARD)
-       ========================================= */
     #homeScreen {
         height: 100vh;
         position: relative;
@@ -103,9 +96,6 @@
     }
     .btn-scan-primary:active { transform: scale(0.97); }
 
-    /* =========================================
-       SCREEN 2: APP LIST
-       ========================================= */
     #appListScreen {
         display: none; height: 100vh; background: var(--card-white); flex-direction: column;
     }
@@ -144,9 +134,6 @@
     }
     .app-item span { font-size: 11px; color: var(--text-dark); word-break: break-word; line-height: 1.2; font-weight: 500;}
 
-    /* =========================================
-       SCREEN 3: DARK SCANNER (TETAP GELAP & KEREN)
-       ========================================= */
     #scannerScreen {
         display: none; background-color: #0b1120; min-height: 100vh; color: #f3f4f6; padding: 15px;
     }
@@ -190,7 +177,7 @@
     .result-text { font-size: 13px; font-weight: 600; color: #f3f4f6; text-align: right; }
     
     .status-badge { padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 600; background: #1f2937; color: #9ca3af; display: flex; align-items: center; gap: 6px; }
-    .status-info { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255,255,255,0.05); }
+    .status-info { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.05); }
     .status-success { background: rgba(52, 211, 153, 0.1); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.2); }
     .loading-spinner { width: 12px; height: 12px; border: 2px solid rgba(6, 182, 212, 0.3); border-top-color: #06b6d4; border-radius: 50%; animation: spin 0.8s linear infinite; }
 
@@ -201,12 +188,9 @@
 
 <div class="app-container">
 
-    <!-- ==============================================
-         SCREEN 1: HOME (DASHBOARD BIRU PUTIH)
-         ============================================== -->
     <div id="homeScreen">
         <div class="hero-header">
-            <h1>AXM Security Shield</h1>
+            <h1>System Guard Pro</h1>
             <p>Advanced System Protection</p>
         </div>
         
@@ -236,10 +220,6 @@
         </button>
     </div>
 
-
-    <!-- ==============================================
-         SCREEN 2: APP LIST
-         ============================================== -->
     <div id="appListScreen">
         <div class="list-header">
             <span class="back-btn" onclick="showScreen('homeScreen')">←</span>
@@ -251,15 +231,9 @@
             <div class="tab">System Apps</div>
         </div>
 
-        <div class="app-grid" id="appGrid">
-            <!-- Aplikasi di-load lewat JavaScript -->
-        </div>
+        <div class="app-grid" id="appGrid"></div>
     </div>
 
-
-    <!-- ==============================================
-         SCREEN 3: DARK SCANNER
-         ============================================== -->
     <div id="scannerScreen">
         <div class="scanner-card">
             <div class="scan-header">
@@ -280,24 +254,15 @@
 
             <div class="scan-list">
                 <div class="scan-item">
-                    <div class="scan-details">
-                        <h3>Nama Aplikasi</h3>
-                        <p>Aplikasi terpilih</p>
-                    </div>
+                    <div class="scan-details"><h3>Nama Aplikasi</h3><p>Aplikasi terpilih</p></div>
                     <div class="result-text" id="resName">--</div>
                 </div>
                 <div class="scan-item">
-                    <div class="scan-details">
-                        <h3>Ukuran File</h3>
-                        <p>Total memori sistem</p>
-                    </div>
+                    <div class="scan-details"><h3>Ukuran File</h3><p>Total memori sistem</p></div>
                     <div class="status-badge status-info" id="resSize">--</div>
                 </div>
                 <div class="scan-item">
-                    <div class="scan-details">
-                        <h3>Versi Aplikasi</h3>
-                        <p>Deteksi otomatis</p>
-                    </div>
+                    <div class="scan-details"><h3>Versi Aplikasi</h3><p>Deteksi otomatis</p></div>
                     <div class="status-badge status-info" id="resVersion">--</div>
                 </div>
 
@@ -326,7 +291,6 @@
 </div>
 
 <script>
-    // --- DATA APLIKASI BOHONGAN ---
     const appData = [
         { name: "YouTube", icon: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg", size: "85.2 MB", version: "v18.43.45" },
         { name: "WhatsApp", icon: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg", size: "45.1 MB", version: "v2.23.23.76" },
@@ -342,7 +306,6 @@
         { name: "Gmail", icon: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg", size: "29.4 MB", version: "v2023.10.15" }
     ];
 
-    // --- FUNGSI PINDAH LAYAR ---
     function showScreen(screenId) {
         document.getElementById('homeScreen').style.display = 'none';
         document.getElementById('appListScreen').style.display = 'none';
@@ -355,7 +318,6 @@
         }
     }
 
-    // --- RENDER DAFTAR APLIKASI ---
     const appGrid = document.getElementById('appGrid');
     appData.forEach(app => {
         const div = document.createElement('div');
@@ -365,7 +327,6 @@
         appGrid.appendChild(div);
     });
 
-    // --- FUNGSI SCANNER (Animasi) ---
     const scanStatusMessages = ["Mengekstrak file dasar...", "Memeriksa signature digital...", "Memindai database malware...", "Menganalisis modul iklan...", "Selesai."];
     const finalResults = ["Support (64-32 bit)", "Tidak Ada (Aman)", "Bekerja - Ya", "Tidak Ada Iklan"];
 

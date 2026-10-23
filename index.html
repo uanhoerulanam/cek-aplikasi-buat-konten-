@@ -97,7 +97,7 @@
     .btn-scan-primary:active { transform: scale(0.97); }
 
     #appListScreen {
-        display: none; height: 100vh; background: var(--card-white); flex-direction: column;
+        display: none; height: 100vh; background: #121824; flex-direction: column; color: #fff;
     }
 
     .list-header {
@@ -109,30 +109,31 @@
     .back-btn { cursor: pointer; font-size: 22px; padding-right: 5px; font-weight: bold; }
 
     .tabs {
-        display: flex; padding: 15px 20px; gap: 10px; border-bottom: 1px solid #f3f4f6;
+        display: flex; padding: 15px 20px; gap: 10px; border-bottom: 1px solid #1f2937; background: #111827;
     }
     .tab {
-        background: var(--bg-light); padding: 8px 20px; border-radius: 20px;
-        font-size: 13px; color: var(--text-gray); font-weight: 600; cursor: pointer;
+        background: #1f2937; padding: 8px 20px; border-radius: 20px;
+        font-size: 13px; color: #9ca3af; font-weight: 600; cursor: pointer;
     }
     .tab.active {
-        background: rgba(59, 130, 246, 0.1); color: var(--blue-primary);
-        border: 1px solid rgba(59, 130, 246, 0.2);
+        background: rgba(59, 130, 246, 0.2); color: #60a5fa;
+        border: 1px solid rgba(59, 130, 246, 0.4);
     }
 
     .app-grid {
-        display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px 10px;
-        padding: 20px; overflow-y: auto; align-content: start; height: 100%;
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 10px;
+        padding: 20px; overflow-y: auto; align-content: start; height: 100%; background: #0b1120;
     }
 
     .app-item {
         display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer;
     }
     .app-item img {
-        width: 50px; height: 50px; border-radius: 12px; margin-bottom: 8px; object-fit: contain;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        width: 52px; height: 52px; border-radius: 14px; margin-bottom: 8px; object-fit: contain;
+        background: #1a2234; padding: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        border: 1px solid rgba(255,255,255,0.08);
     }
-    .app-item span { font-size: 11px; color: var(--text-dark); word-break: break-word; line-height: 1.2; font-weight: 500;}
+    .app-item span { font-size: 11px; color: #f3f4f6; word-break: break-word; line-height: 1.2; font-weight: 500;}
 
     #scannerScreen {
         display: none; background-color: #0b1120; min-height: 100vh; color: #f3f4f6; padding: 15px;
@@ -161,7 +162,7 @@
         margin: 0 auto 15px; position: relative; overflow: hidden; background: #1a2436;
         display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-    #dynamicAppIcon { width: 45px; height: 45px; object-fit: contain; z-index: 1; border-radius: 8px;}
+    #dynamicAppIcon { width: 45px; height: 45px; object-fit: contain; z-index: 1; border-radius: 10px; background: #111827; padding: 4px; }
     .laser-line {
         position: absolute; width: 100%; height: 2px; background: #22d3ee;
         box-shadow: 0 0 12px 3px #06b6d4; top: 0; left: 0; animation: scan-laser 1.2s ease-in-out infinite alternate; z-index: 10;
@@ -177,7 +178,7 @@
     .result-text { font-size: 13px; font-weight: 600; color: #f3f4f6; text-align: right; }
     
     .status-badge { padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 600; background: #1f2937; color: #9ca3af; display: flex; align-items: center; gap: 6px; }
-    .status-info { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.05); }
+    .status-info { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255,255,255,0.05); }
     .status-success { background: rgba(52, 211, 153, 0.1); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.2); }
     .loading-spinner { width: 12px; height: 12px; border: 2px solid rgba(6, 182, 212, 0.3); border-top-color: #06b6d4; border-radius: 50%; animation: spin 0.8s linear infinite; }
 
@@ -291,19 +292,24 @@
 </div>
 
 <script>
+    // URL DIBAWAH INI SUDAH DIGANTI MENJADI FORMAT PNG RESOLUSI TINGGI (ANTI-RUSAK)
     const appData = [
-        { name: "YouTube", icon: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg", size: "85.2 MB", version: "v18.43.45" },
-        { name: "WhatsApp", icon: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg", size: "45.1 MB", version: "v2.23.23.76" },
-        { name: "Spotify", icon: "https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg", size: "32.8 MB", version: "v8.8.82.634" },
-        { name: "Netflix", icon: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Netflix_2015_N_logo.svg", size: "28.5 MB", version: "v8.91.1" },
-        { name: "TikTok", icon: "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg", size: "112.4 MB", version: "v32.1.3" },
-        { name: "Instagram", icon: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg", size: "54.9 MB", version: "v306.0.0" },
-        { name: "Chrome", icon: "https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png", size: "15.3 MB", version: "v119.0.6045" },
-        { name: "Free Fire", icon: "https://play-lh.googleusercontent.com/9rEVgq4rYI6JpQicXmS9yP2H3C12YtA3O4m75q8eGjL-6vKx-aW9iFf5aB4X9_gZ0g", size: "350.2 MB", version: "v1.102.1" },
-        { name: "CapCut", icon: "https://play-lh.googleusercontent.com/u-F3X3g4PzH0FwE8iQ3zFxbZ3uK0n-qOtkW416V19nQ1-p3xJ1E0TzCXYe-yqA2lTQ", size: "125.0 MB", version: "v9.6.0" },
-        { name: "Facebook", icon: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg", size: "65.7 MB", version: "v438.0.0" },
-        { name: "Telegram", icon: "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg", size: "38.1 MB", version: "v9.7.0" },
-        { name: "Gmail", icon: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg", size: "29.4 MB", version: "v2023.10.15" }
+        { name: "YouTube", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/512px-YouTube_full-color_icon_%282017%29.svg.png", size: "85.2 MB", version: "v18.43.45" },
+        { name: "WhatsApp", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/512px-WhatsApp.svg.png", size: "45.1 MB", version: "v2.23.23.76" },
+        { name: "Spotify", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/512px-Spotify_logo_without_text.svg.png", size: "32.8 MB", version: "v8.8.82.634" },
+        { name: "Netflix", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/512px-Netflix_2015_logo.svg.png", size: "28.5 MB", version: "v8.91.1" },
+        { name: "TikTok", icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a9/TikTok_logo.svg/512px-TikTok_logo.svg.png", size: "112.4 MB", version: "v32.1.3" },
+        { name: "Instagram", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/512px-Instagram_logo_2016.svg.png", size: "54.9 MB", version: "v306.0.0" },
+        { name: "Chrome", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%282020%29.svg/512px-Google_Chrome_icon_%282020%29.svg.png", size: "15.3 MB", version: "v119.0.6045" },
+        { name: "Free Fire", icon: "https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Free_Fire_Logo.png/512px-Free_Fire_Logo.png", size: "350.2 MB", version: "v1.102.1" },
+        { name: "Mobile Legends", icon: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9a/Mobile_Legends_Bang_Bang_logo.png/512px-Mobile_Legends_Bang_Bang_logo.png", size: "520.4 MB", version: "v1.8.30" },
+        { name: "PUBG Mobile", icon: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/PUBG_Mobile_logo.png/512px-PUBG_Mobile_logo.png", size: "780.0 MB", version: "v2.9.0" },
+        { name: "CapCut", icon: "https://cdn.iconscout.com/icon/free/png-256/free-capcut-logo-icon-download-in-svg-png-gif-file-formats--video-editor-apps-pack-logos-icons-5330703.png", size: "125.0 MB", version: "v9.6.0" },
+        { name: "Facebook", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/512px-2021_Facebook_icon.svg.png", size: "65.7 MB", version: "v438.0.0" },
+        { name: "Telegram", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/512px-Telegram_logo.svg.png", size: "38.1 MB", version: "v9.7.0" },
+        { name: "Gmail", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/512px-Gmail_icon_%282020%29.svg.png", size: "29.4 MB", version: "v2023.10.15" },
+        { name: "Shopee", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Shopee_logo.svg/512px-Shopee_logo.svg.png", size: "95.2 MB", version: "v2.98.22" },
+        { name: "Discord", icon: "https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png", size: "88.3 MB", version: "v205.0" }
     ];
 
     function showScreen(screenId) {
@@ -322,7 +328,8 @@
     appData.forEach(app => {
         const div = document.createElement('div');
         div.className = 'app-item';
-        div.innerHTML = `<img src="${app.icon}" alt="${app.name}"><span>${app.name}</span>`;
+        // Tambahan loading="lazy" agar gambar tidak berat saat dimuat
+        div.innerHTML = `<img src="${app.icon}" alt="${app.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Icon'"><span>${app.name}</span>`;
         div.onclick = () => startAppScan(app);
         appGrid.appendChild(div);
     });

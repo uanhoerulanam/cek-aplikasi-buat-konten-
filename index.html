@@ -13,6 +13,13 @@
         --card-white: #ffffff;
         --text-dark: #1f2937;
         --text-gray: #6b7280;
+        
+        /* Warna Scanner */
+        --cyan: #22d3ee;
+        --green: #34d399;
+        --dark-bg: #0b1120;
+        --card-bg: #111827;
+        --border-color: #1f2937;
     }
 
     * {
@@ -39,153 +46,211 @@
         overflow: hidden;
     }
 
-    #homeScreen {
-        height: 100vh;
-        position: relative;
-        background: var(--bg-light);
-        display: block;
-    }
-
+    /* === HOME SCREEN === */
+    #homeScreen { height: 100vh; position: relative; background: var(--bg-light); display: block; }
     .hero-header {
-        background: var(--blue-gradient);
-        padding: 40px 20px 65px;
-        color: white;
-        text-align: center;
-        border-radius: 0 0 35px 35px;
+        background: var(--blue-gradient); padding: 40px 20px 65px;
+        color: white; text-align: center; border-radius: 0 0 35px 35px;
         box-shadow: 0 4px 15px rgba(29, 78, 216, 0.4);
     }
-
     .hero-header h1 { font-size: 22px; font-weight: 800; letter-spacing: 0.5px; }
     .hero-header p { font-size: 13px; opacity: 0.9; margin-top: 5px; }
-
     .dashboard-card {
-        background: var(--card-white);
-        margin: -40px 20px 20px;
-        border-radius: 20px;
-        padding: 30px 20px;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        position: relative;
+        background: var(--card-white); margin: -40px 20px 20px; border-radius: 20px;
+        padding: 30px 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative;
     }
-
     .shield-check {
-        width: 75px; height: 75px; 
-        background: #dcfce7; color: #16a34a;
+        width: 75px; height: 75px; background: #dcfce7; color: #16a34a;
         border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        font-size: 38px; margin: 0 auto 15px;
-        box-shadow: 0 0 0 8px rgba(220, 252, 231, 0.5);
+        font-size: 38px; margin: 0 auto 15px; box-shadow: 0 0 0 8px rgba(220, 252, 231, 0.5);
     }
-
     .dashboard-card h2 { font-size: 18px; color: var(--text-dark); margin-bottom: 5px; }
     .dashboard-card p { font-size: 13px; color: var(--text-gray); margin-bottom: 20px; }
-
-    .stats-row {
-        display: flex; border-top: 1px solid #f3f4f6; padding-top: 15px;
-    }
+    .stats-row { display: flex; border-top: 1px solid #f3f4f6; padding-top: 15px; }
     .stat-box { flex: 1; }
     .stat-box strong { display: block; font-size: 15px; color: var(--blue-primary); }
     .stat-box span { font-size: 11px; color: var(--text-gray); }
-
     .btn-scan-primary {
-        background: var(--blue-gradient);
-        color: white; border: none; padding: 16px 20px; border-radius: 16px;
+        background: var(--blue-gradient); color: white; border: none; padding: 16px 20px; border-radius: 16px;
         font-size: 16px; font-weight: 700; width: calc(100% - 40px); margin: 15px 20px;
         display: flex; align-items: center; justify-content: center; gap: 10px;
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4); cursor: pointer;
-        transition: transform 0.1s;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4); cursor: pointer; transition: transform 0.1s;
     }
     .btn-scan-primary:active { transform: scale(0.97); }
 
-    #appListScreen {
-        display: none; height: 100vh; background: #121824; flex-direction: column; color: #fff;
-    }
-
+    /* === APP LIST SCREEN === */
+    #appListScreen { display: none; height: 100vh; background: #121824; flex-direction: column; color: #fff; }
     .list-header {
         background: var(--blue-gradient); padding: 18px 20px; color: white;
         display: flex; align-items: center; gap: 15px; font-size: 18px; font-weight: 600;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-
     .back-btn { cursor: pointer; font-size: 22px; padding-right: 5px; font-weight: bold; }
-
-    .tabs {
-        display: flex; padding: 15px 20px; gap: 10px; border-bottom: 1px solid #1f2937; background: #111827;
-    }
-    .tab {
-        background: #1f2937; padding: 8px 20px; border-radius: 20px;
-        font-size: 13px; color: #9ca3af; font-weight: 600; cursor: pointer;
-    }
-    .tab.active {
-        background: rgba(59, 130, 246, 0.2); color: #60a5fa;
-        border: 1px solid rgba(59, 130, 246, 0.4);
-    }
-
+    .tabs { display: flex; padding: 15px 20px; gap: 10px; border-bottom: 1px solid var(--border-color); background: #111827; }
+    .tab { background: var(--border-color); padding: 8px 20px; border-radius: 20px; font-size: 13px; color: #9ca3af; font-weight: 600; cursor: pointer; }
+    .tab.active { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
     .app-grid {
         display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 10px;
-        padding: 20px; overflow-y: auto; align-content: start; height: 100%; background: #0b1120;
+        padding: 20px; overflow-y: auto; align-content: start; height: 100%; background: var(--dark-bg);
     }
-
-    .app-item {
-        display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer;
-    }
-    
-    /* Modifikasi CSS: object-fit cover agar gambar JPG dari GitHub terlihat penuh seperti ikon aplikasi */
+    .app-item { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: transform 0.2s; }
+    .app-item:active { transform: scale(0.9); }
     .app-item img {
         width: 52px; height: 52px; border-radius: 14px; margin-bottom: 8px; object-fit: cover;
-        background: #1a2234; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: #1a2234; box-shadow: 0 4px 12px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
     }
-
     .app-item span { font-size: 11px; color: #f3f4f6; word-break: break-word; line-height: 1.2; font-weight: 500;}
 
-    #scannerScreen {
-        display: none; background-color: #0b1120; min-height: 100vh; color: #f3f4f6; padding: 15px;
-    }
-
+    /* === SCANNER SCREEN (UPGRADED UI & ANIMATION) === */
+    #scannerScreen { display: none; background-color: var(--dark-bg); min-height: 100vh; color: #f3f4f6; padding: 15px; }
+    
     .scanner-card {
-        background: #111827; border-radius: 20px; border: 1px solid #1f2937; overflow: hidden;
-        box-shadow: 0 15px 50px rgba(0,0,0,0.6); margin-top: 10px;
+        background: rgba(17, 24, 39, 0.85); /* Efek Kaca */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 24px; 
+        border: 1px solid rgba(255, 255, 255, 0.08); 
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05); 
+        margin-top: 10px;
+        position: relative;
     }
+    
     .scan-header {
-        padding: 20px; border-bottom: 1px solid #1f2937; display: flex; align-items: center; gap: 12px; background: #0f1523;
+        padding: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+        display: flex; align-items: center; gap: 12px; background: rgba(15, 21, 35, 0.8);
     }
     .scan-icon-shield {
-        width: 36px; height: 36px; background: rgba(34, 211, 238, 0.1); border-radius: 10px;
-        display: flex; align-items: center; justify-content: center; color: #22d3ee; border: 1px solid rgba(34, 211, 238, 0.2);
+        width: 40px; height: 40px; background: rgba(34, 211, 238, 0.1); border-radius: 12px;
+        display: flex; align-items: center; justify-content: center; font-size: 20px;
+        color: var(--cyan); border: 1px solid rgba(34, 211, 238, 0.2);
+        box-shadow: 0 0 15px rgba(34, 211, 238, 0.2);
     }
-    .scan-header h1 { font-size: 15px; font-weight: 700; color: #22d3ee; }
-    .scan-header p { font-size: 11px; color: #9ca3af; letter-spacing: 1px; }
+    .scan-header h1 { font-size: 15px; font-weight: 700; color: var(--cyan); letter-spacing: 1px; }
+    .scan-header p { font-size: 11px; color: #9ca3af; letter-spacing: 1px; margin-top: 2px;}
 
     .active-scan-container {
-        padding: 25px 20px; text-align: center; background: radial-gradient(circle at top, #152336 0%, #111827 70%);
+        padding: 30px 20px; text-align: center; 
+        background: radial-gradient(circle at top, rgba(21, 35, 54, 0.8) 0%, transparent 70%);
         border-bottom: 1px solid rgba(255,255,255,0.05);
+        position: relative;
     }
+    
+    /* Kotak Ikon Aplikasi */
     .file-box-visual {
-        width: 75px; height: 75px; border: 2px solid #1f2937; border-radius: 16px;
-        margin: 0 auto 15px; position: relative; overflow: hidden; background: #1a2436;
-        display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        width: 90px; height: 90px; border: 2px solid rgba(255,255,255,0.1); border-radius: 20px;
+        margin: 0 auto 20px; position: relative; overflow: hidden; background: #1a2436;
+        display: flex; align-items: center; justify-content: center; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.5s ease;
     }
-    #dynamicAppIcon { width: 45px; height: 45px; object-fit: contain; z-index: 1; border-radius: 10px; background: #111827; padding: 4px; }
+    
+    #dynamicAppIcon { 
+        width: 60px; height: 60px; object-fit: contain; z-index: 1; border-radius: 12px; 
+        background: #111827; padding: 4px; transition: all 0.5s ease;
+        animation: icon-pulse 2s infinite alternate; /* Animasi Ikon Bernafas */
+    }
+    
+    /* Garis Laser */
     .laser-line {
-        position: absolute; width: 100%; height: 2px; background: #22d3ee;
-        box-shadow: 0 0 12px 3px #06b6d4; top: 0; left: 0; animation: scan-laser 1.2s ease-in-out infinite alternate; z-index: 10;
+        position: absolute; width: 100%; height: 3px; background: var(--cyan);
+        box-shadow: 0 0 15px 4px rgba(6, 182, 212, 0.8); top: 0; left: 0; 
+        animation: scan-laser 1.2s ease-in-out infinite alternate; z-index: 10;
+        border-radius: 50%;
     }
-    @keyframes scan-laser { 0% { top: -2px; } 100% { top: 73px; } }
-    .scan-status-text { font-size: 13px; font-weight: 600; color: #22d3ee; }
+    
+    .scan-status-text { 
+        font-size: 14px; font-weight: 600; color: var(--cyan); 
+        transition: color 0.3s ease;
+    }
 
+    /* --- EFEK AKHIRAN (SUCCESS STATE) --- */
+    .scanner-card.scan-success .file-box-visual {
+        border-color: var(--green);
+        box-shadow: 0 0 30px rgba(52, 211, 153, 0.3), inset 0 0 20px rgba(52, 211, 153, 0.1);
+    }
+    .scanner-card.scan-success #dynamicAppIcon {
+        animation: none; /* Hentikan denyut */
+        transform: scale(0.9); /* Sedikit mengecil agar centang terlihat */
+        opacity: 0.5;
+    }
+    .scanner-card.scan-success .laser-line {
+        display: none;
+    }
+    
+    /* Ikon Centang (Checkmark) yang muncul tiba-tiba */
+    .success-checkmark {
+        position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+        opacity: 0; transform: scale(0); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 20;
+    }
+    .scanner-card.scan-success .success-checkmark {
+        opacity: 1; transform: scale(1);
+    }
+    .success-checkmark svg {
+        width: 60px; height: 60px; fill: none; stroke: var(--green); stroke-width: 3;
+        stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 10px rgba(52,211,153,0.8));
+    }
+    .success-checkmark svg path {
+        stroke-dasharray: 100; stroke-dashoffset: 100;
+        animation: draw-check 0.6s ease forwards 0.3s;
+    }
+
+    /* List Hasil Scan */
     .scan-list { padding: 0 20px 10px; }
-    .scan-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px dashed rgba(255,255,255,0.08); gap: 15px; }
+    .scan-item { 
+        display: flex; justify-content: space-between; align-items: center; 
+        padding: 16px 0; border-bottom: 1px dashed rgba(255,255,255,0.08); gap: 15px;
+        opacity: 0; transform: translateY(10px); /* Untuk animasi muncul */
+        transition: all 0.4s ease;
+    }
+    
+    /* Animasi Muncul Berurutan */
+    .scan-item.visible { opacity: 1; transform: translateY(0); }
+
     .scan-item:last-child { border-bottom: none; }
     .scan-details h3 { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #e5e7eb; }
     .scan-details p { font-size: 11px; color: #9ca3af; }
     .result-text { font-size: 13px; font-weight: 600; color: #f3f4f6; text-align: right; }
     
-    .status-badge { padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 600; background: #1f2937; color: #9ca3af; display: flex; align-items: center; gap: 6px; }
+    .status-badge { 
+        padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 600; 
+        background: var(--border-color); color: #9ca3af; display: flex; align-items: center; gap: 6px;
+        transition: all 0.3s ease;
+    }
     .status-info { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255,255,255,0.05); }
-    .status-success { background: rgba(52, 211, 153, 0.1); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.2); }
-    .loading-spinner { width: 12px; height: 12px; border: 2px solid rgba(6, 182, 212, 0.3); border-top-color: #06b6d4; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .status-success { 
+        background: rgba(52, 211, 153, 0.15); color: var(--green); 
+        border: 1px solid rgba(52, 211, 153, 0.3); 
+        box-shadow: 0 0 10px rgba(52, 211, 153, 0.1);
+    }
+    .loading-spinner { width: 12px; height: 12px; border: 2px solid rgba(6, 182, 212, 0.3); border-top-color: var(--cyan); border-radius: 50%; animation: spin 0.8s linear infinite; }
 
-    .reset-btn { width: 100%; margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #06b6d4, #0284c7); color: white; border: none; border-radius: 14px; font-weight: 600; font-size: 14px; cursor: pointer; display: none;}
+    .reset-btn { 
+        width: calc(100% - 40px); margin: 20px; padding: 16px; 
+        background: linear-gradient(135deg, #06b6d4, #0284c7); color: white; border: none; border-radius: 16px; 
+        font-weight: 700; font-size: 15px; cursor: pointer; display: none;
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3); transition: transform 0.1s;
+    }
+    .reset-btn:active { transform: scale(0.97); }
+
+    /* === KEYFRAMES ANIMASI === */
+    @keyframes scan-laser { 
+        0% { top: -2px; opacity: 0; } 
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { top: 88px; opacity: 0; } 
+    }
+    
+    @keyframes icon-pulse {
+        0% { transform: scale(1); box-shadow: 0 0 0 rgba(34, 211, 238, 0); }
+        100% { transform: scale(1.05); box-shadow: 0 0 20px rgba(34, 211, 238, 0.4); }
+    }
+
+    @keyframes draw-check {
+        100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -204,18 +269,9 @@
             <p>Tidak ada ancaman terdeteksi di perangkat Anda saat ini.</p>
             
             <div class="stats-row">
-                <div class="stat-box">
-                    <strong>128</strong>
-                    <span>Aplikasi</span>
-                </div>
-                <div class="stat-box" style="border-left: 1px solid #f3f4f6;">
-                    <strong style="color: #16a34a;">0</strong>
-                    <span>Ancaman</span>
-                </div>
-                <div class="stat-box" style="border-left: 1px solid #f3f4f6;">
-                    <strong>Hari Ini</strong>
-                    <span>Update Info</span>
-                </div>
+                <div class="stat-box"><strong>128</strong><span>Aplikasi</span></div>
+                <div class="stat-box" style="border-left: 1px solid #f3f4f6;"><strong style="color: #16a34a;">0</strong><span>Ancaman</span></div>
+                <div class="stat-box" style="border-left: 1px solid #f3f4f6;"><strong>Hari Ini</strong><span>Update Info</span></div>
             </div>
         </div>
 
@@ -238,13 +294,14 @@
         <div class="app-grid" id="appGrid"></div>
     </div>
 
+    <!-- SCANNER SCREEN -->
     <div id="scannerScreen">
-        <div class="scanner-card">
+        <div class="scanner-card" id="scannerCard">
             <div class="scan-header">
                 <div class="scan-icon-shield">🛡️</div>
                 <div>
                     <h1>APK SECURITY REPORT</h1>
-                    <p>ENGINE ANALYSIS RUNNING...</p>
+                    <p id="engineStatus">ENGINE ANALYSIS RUNNING...</p>
                 </div>
             </div>
 
@@ -252,37 +309,44 @@
                 <div class="file-box-visual">
                     <div class="laser-line" id="laserLine"></div>
                     <img id="dynamicAppIcon" src="" alt="App Icon">
+                    
+                    <!-- Ikon Centang Animasi saat sukses -->
+                    <div class="success-checkmark">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
                 </div>
                 <div class="scan-status-text" id="mainScanStatus">Menyiapkan Mesin Scanner...</div>
             </div>
 
             <div class="scan-list">
-                <div class="scan-item">
+                <div class="scan-item" id="item1">
                     <div class="scan-details"><h3>Nama Aplikasi</h3><p>Aplikasi terpilih</p></div>
                     <div class="result-text" id="resName">--</div>
                 </div>
-                <div class="scan-item">
+                <div class="scan-item" id="item2">
                     <div class="scan-details"><h3>Ukuran File</h3><p>Total memori sistem</p></div>
                     <div class="status-badge status-info" id="resSize">--</div>
                 </div>
-                <div class="scan-item">
+                <div class="scan-item" id="item3">
                     <div class="scan-details"><h3>Versi Aplikasi</h3><p>Deteksi otomatis</p></div>
                     <div class="status-badge status-info" id="resVersion">--</div>
                 </div>
 
-                <div class="scan-item">
+                <div class="scan-item" id="item4">
                     <div class="scan-details"><h3>Architecture CPU</h3><p>32-bit / 64-bit compatibility</p></div>
                     <div class="status-badge" id="status1">Menunggu...</div>
                 </div>
-                <div class="scan-item">
+                <div class="scan-item" id="item5">
                     <div class="scan-details"><h3>Virus Scan</h3><p>Malware & Trojan detection</p></div>
                     <div class="status-badge" id="status2">Menunggu...</div>
                 </div>
-                <div class="scan-item">
+                <div class="scan-item" id="item6">
                     <div class="scan-details"><h3>Runtime Test</h3><p>App stability & working status</p></div>
                     <div class="status-badge" id="status3">Menunggu...</div>
                 </div>
-                <div class="scan-item">
+                <div class="scan-item" id="item7">
                     <div class="scan-details"><h3>Ads Detection</h3><p>Hidden ads module</p></div>
                     <div class="status-badge" id="status4">Menunggu...</div>
                 </div>
@@ -375,42 +439,72 @@
 
     async function startAppScan(app) {
         showScreen('scannerScreen');
-        document.getElementById('resetBtn').style.display = 'none';
+        
+        const scannerCard = document.getElementById('scannerCard');
+        const resetBtn = document.getElementById('resetBtn');
+        const laserLine = document.getElementById('laserLine');
+        const mainScanStatus = document.getElementById('mainScanStatus');
+        const engineStatus = document.getElementById('engineStatus');
+        
+        // Reset state (kembalikan ke awal sebelum scan)
+        scannerCard.classList.remove('scan-success');
+        resetBtn.style.display = 'none';
+        laserLine.style.display = 'block';
+        mainScanStatus.style.color = "var(--cyan)";
+        engineStatus.textContent = "ENGINE ANALYSIS RUNNING...";
+        engineStatus.style.color = "#9ca3af";
+        
+        // Reset list items (sembunyikan dulu)
+        for(let i=1; i<=7; i++) {
+            document.getElementById('item'+i).classList.remove('visible');
+        }
         
         document.getElementById('dynamicAppIcon').src = app.icon;
         document.getElementById('resName').textContent = app.name + " APK";
         document.getElementById('resSize').textContent = app.size;
         document.getElementById('resVersion').textContent = app.version;
 
-        const laserLine = document.getElementById('laserLine');
-        const mainScanStatus = document.getElementById('mainScanStatus');
-        laserLine.style.display = 'block';
-        mainScanStatus.style.color = "#22d3ee";
-
         for(let i=1; i<=4; i++) {
             document.getElementById('status'+i).className = 'status-badge';
             document.getElementById('status'+i).innerHTML = 'Menunggu...';
         }
 
+        // Animasi muncul list pertama (Nama, Ukuran, Versi)
+        setTimeout(() => document.getElementById('item1').classList.add('visible'), 200);
+        setTimeout(() => document.getElementById('item2').classList.add('visible'), 400);
+        setTimeout(() => document.getElementById('item3').classList.add('visible'), 600);
+
+        // Proses Scan
         for (let i = 1; i <= 4; i++) {
             const badge = document.getElementById('status' + i);
+            const listItem = document.getElementById('item' + (i + 3)); // item4, item5, item6, item7
+            
             badge.innerHTML = '<span class="loading-spinner"></span> Scanning...';
-            badge.style.color = '#06b6d4';
+            badge.style.color = 'var(--cyan)';
             
             mainScanStatus.textContent = scanStatusMessages[i-1];
             
-            const delay = Math.floor(Math.random() * 800) + 1200; 
+            // Tampilkan baris yang sedang discan
+            listItem.classList.add('visible');
+            
+            const delay = Math.floor(Math.random() * 600) + 1000; 
             await new Promise(r => setTimeout(r, delay));
 
+            // Ubah ke sukses
             badge.className = 'status-badge status-success';
             badge.innerHTML = finalResults[i-1];
-            badge.style.color = ''; 
         }
 
-        laserLine.style.display = 'none';
+        // ==== EFEK AKHIRAN (SUCCESS ANIMATION) ====
+        scannerCard.classList.add('scan-success'); // Memicu animasi centang & glow hijau
+        engineStatus.textContent = "ANALYSIS COMPLETE";
+        engineStatus.style.color = "var(--green)";
         mainScanStatus.textContent = "✓ Pemindaian Selesai (Aman)";
-        mainScanStatus.style.color = "#34d399";
-        document.getElementById('resetBtn').style.display = 'block';
+        mainScanStatus.style.color = "var(--green)";
+        
+        setTimeout(() => {
+            resetBtn.style.display = 'block';
+        }, 800); // Tombol muncul setelah centang selesai tergambar
     }
 </script>
 </body>

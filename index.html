@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070b13">
+<title>AXM APK Inspector — Laporan APK</title>
+<style>
+:root{--bg:#070b13;--panel:#0d1421;--panel2:#101b2b;--line:#1e3448;--cyan:#00d9ff;--green:#3df5a4;--purple:#b47aff;--muted:#91a5ba;--text:#edf7ff;--red:#ff6b81}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#102a40 0,transparent 38%),radial-gradient(ellipse at 100% 30%,#17123a 0,transparent 32%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{max-width:1080px;margin:auto;padding:22px 16px 48px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:11px}.logo{width:44px;height:44px;border:1px solid #00d9ff80;border-radius:14px;display:grid;place-items:center;color:var(--cyan);font-weight:900;font-size:18px;box-shadow:0 0 25px #00d9ff20}.brand b{letter-spacing:1.4px}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:1.5px}.pill{border:1px solid #31516a;border-radius:99px;padding:6px 10px;color:#b9d6e9;font-size:11px;white-space:nowrap}
+.hero{padding:27px 22px;border:1px solid #1a4960;border-radius:22px;background:linear-gradient(120deg,#0c1a2aee,#101126ee);position:relative;overflow:hidden;box-shadow:0 20px 60px #0005}.hero:after{content:"";position:absolute;width:210px;height:210px;right:-80px;top:-100px;border-radius:50%;border:1px solid #00d9ff55;box-shadow:0 0 0 25px #00d9ff08,0 0 0 55px #00d9ff05}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:2px}.hero h1{font-size:clamp(28px,5vw,45px);line-height:1.08;margin:10px 0}.hero h1 span{color:var(--cyan)}.hero p{color:#a9bdcf;max-width:620px;margin:0}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+button,.btn{border:0;border-radius:12px;padding:12px 16px;font:700 13px system-ui;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}.primary{background:linear-gradient(100deg,var(--cyan),#57f2c0);color:#06101a}.secondary{background:#142338;color:#dff6ff;border:1px solid #294b65}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:16px 0}.stat,.card{background:linear-gradient(150deg,#0e1827,#0a111d);border:1px solid var(--line);border-radius:17px;padding:17px}.stat .ico{font-size:20px}.stat small{display:block;color:var(--muted);margin-top:7px}.stat strong{display:block;font-size:18px;margin-top:3px}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:24px 2px 12px}.section-title h2{font-size:17px;margin:0}.section-title span{font-size:11px;color:var(--muted)}
+.upload{border:1px dashed #27708a;background:#091522;border-radius:18px;padding:23px;text-align:center;cursor:pointer;transition:.2s}.upload:hover,.upload.drag{border-color:var(--cyan);background:#0c2030}.upload .big{font-size:34px}.upload h3{margin:8px 0 4px}.upload p{margin:0;color:var(--muted);font-size:13px}.file-meta{display:none;margin-top:13px;padding:12px;border:1px solid var(--line);border-radius:12px;text-align:left;background:#0c1826;overflow-wrap:anywhere}
+.results{display:none}.result-head{display:flex;align-items:center;gap:12px}.appicon{width:54px;height:54px;border-radius:14px;background:#14253a;display:grid;place-items:center;font-size:26px;border:1px solid #284b64}.result-head h3{margin:0}.result-head p{margin:2px 0;color:var(--muted);font-size:12px}.tag{display:inline-block;border-radius:99px;padding:4px 9px;font-size:11px;background:#17283a;color:#9fc5dc;border:1px solid #2c4a62}.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.check{border:1px solid var(--line);border-radius:13px;padding:13px;background:#0b1420}.check strong{display:block;font-size:13px}.check p{font-size:12px;color:var(--muted);margin:5px 0 0}.status{font-size:10px;color:var(--cyan);font-weight:800;letter-spacing:.5px}.notice{font-size:12px;color:#b4c4d3;background:#111e2c;border-left:3px solid var(--purple);padding:12px 13px;border-radius:8px;margin-top:13px}.toolrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tool{display:flex;gap:12px;align-items:flex-start}.tool .ticon{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;font-size:21px;flex-shrink:0;background:#10273a;border:1px solid #214a62}.tool h3{font-size:14px;margin:0 0 4px}.tool p{font-size:12px;color:var(--muted);margin:0 0 10px}.tool a{color:var(--cyan);font-size:12px;text-decoration:none;font-weight:700}.foot{color:#657e93;text-align:center;font-size:11px;margin-top:25px}.hide{display:none!important}
+@media(max-width:650px){.wrap{padding:15px 12px 32px}.top{align-items:flex-start}.pill{font-size:10px}.hero{padding:22px 17px}.grid{grid-template-columns:1fr;gap:9px}.stat{display:flex;align-items:center;gap:12px;padding:13px}.stat small{margin:0}.stat strong{font-size:15px}.checks,.toolrow{grid-template-columns:1fr}.section-title{margin-top:20px}.hero-actions button,.hero-actions .btn{flex:1}.result-head{align-items:flex-start}}
+@media print{body{background:#fff;color:#111}.wrap{max-width:none}.top,.hero-actions,.upload,.toolrow,.foot,.section-title button{display:none!important}.hero,.stat,.card,.check{background:#fff;color:#111;border:1px solid #bbb;box-shadow:none}.hero p,.stat small,.check p,.result-head p{color:#444}.results{display:block!important}.tag{color:#111;background:#eee}.notice{color:#111;background:#f5f5f5}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="logo">AX</div><div><b>ANKRAIXMOTION</b><small>APK INSPECTOR / REPORT LAB</small></div></div>
+    <div class="pill">● ANDROID TOOLKIT</div>
+  </header>
+  <section class="hero">
+    <div class="eyebrow">APK ANALYSIS CONSOLE</div>
+    <h1>Periksa APK.<br><span>Pahami risikonya.</span></h1>
+    <p>Periksa arsitektur, informasi file, dan petunjuk keamanan APK dari HP. Buat laporan yang rapi untuk dokumentasi atau konten video.</p>
+    <div class="hero-actions"><button class="primary" onclick="document.getElementById('apkfile').click()">＋ Pilih File APK</button><a class="btn secondary" href="https://www.virustotal.com/" target="_blank" rel="noopener">↗ Buka VirusTotal</a></div>
+  </section>
+  <div class="grid">
+    <div class="stat"><div class="ico">◈</div><div><small>ARSITEKTUR</small><strong id="statAbi">Belum diperiksa</strong></div></div>
+    <div class="stat"><div class="ico">⌁</div><div><small>PEMINDAIAN VIRUS</small><strong>Perlu scan terpisah</strong></div></div>
+    <div class="stat"><div class="ico">▣</div><div><small>MODE ANALISIS</small><strong>File lokal di browser</strong></div></div>
+  </div>
+  <div class="section-title"><h2>01 / Pilih APK untuk diperiksa</h2><span>APK · maksimal sesuai memori HP</span></div>
+  <div class="upload" id="dropzone" onclick="document.getElementById('apkfile').click()">
+    <div class="big">⇧</div><h3>Ketuk untuk memilih file APK</h3><p>Atau tarik file ke area ini jika browser mendukungnya.</p>
+    <input id="apkfile" type="file" accept=".apk,application/vnd.android.package-archive" hidden>
+    <div class="file-meta" id="fileMeta"></div>
+  </div>
+  <div id="results" class="results">
+    <div class="section-title"><h2>02 / Ringkasan analisis</h2><span id="scanTime"></span></div>
+    <section class="card">
+      <div class="result-head"><div class="appicon">▣</div><div><h3 id="fileName">Nama APK</h3><p id="fileInfo">Informasi file</p><span class="tag">ANALISIS FILE STATIS</span></div></div>
+      <div class="checks">
+        <div class="check"><span class="status">ARSITEKTUR / ABI</span><strong id="abiTitle">Belum diketahui</strong><p id="abiDesc">Memeriksa folder pustaka native di dalam APK.</p></div>
+        <div class="check"><span class="status">UKURAN FILE</span><strong id="sizeTitle">—</strong><p>Ukuran file yang dipilih.</p></div>
+        <div class="check"><span class="status">PEMINDAIAN MALWARE</span><strong>Belum dipindai</strong><p>Analisis ini tidak menjalankan antivirus. Pindai file melalui layanan keamanan terpisah.</p></div>
+        <div class="check"><span class="status">ERROR / CRASH</span><strong>Belum diuji</strong><p>File statis tidak bisa memastikan aplikasi bebas crash. Perlu diuji saat dijalankan.</p></div>
+      </div>
+      <div class="notice" id="abiNotice">Catatan: daftar ABI menunjukkan arsitektur native yang disertakan. Jika tidak ada pustaka native, aplikasi mungkin memakai kode Java/Kotlin saja; hasil ini tidak otomatis berarti tidak kompatibel.</div>
+      <div class="hero-actions"><button class="primary" onclick="window.print()">▤ Simpan / Cetak Laporan</button><a class="btn secondary" href="https://www.virustotal.com/" target="_blank" rel="noopener">Pindai di VirusTotal ↗</a></div>
+    </section>
+  </div>
+  <div class="section-title"><h2>03 / Alat pemeriksaan tambahan</h2><span>Gunakan lebih dari satu pemeriksaan</span></div>
+  <div class="toolrow">
+    <section class="card tool"><div class="ticon">🛡️</div><div><h3>VirusTotal</h3><p>Memindai file dengan banyak mesin deteksi. Hasil bersih bukan jaminan mutlak aman.</p><a href="https://www.virustotal.com/" target="_blank" rel="noopener">BUKA WEBSITE ↗</a></div></section>
+    <section class="card tool"><div class="ticon">⌘</div><div><h3>APK Analyzer (lokal)</h3><p>Memeriksa manifest, izin, versi Android, ABI, dan struktur file di browser.</p><a href="https://bytescope.dev/en/apk-analyzer/" target="_blank" rel="noopener">BUKA ANALYZER ↗</a></div></section>
+    <section class="card tool"><div class="ticon">▤</div><div><h3>APKLint</h3><p>Alat web untuk memeriksa informasi APK, tanda tangan, izin, dan beberapa risiko struktur.</p><a href="https://apklint.com/apk-checker/" target="_blank" rel="noopener">BUKA APK CHECKER ↗</a></div></section>
+    <section class="card tool"><div class="ticon">✓</div><div><h3>Tes aplikasi langsung</h3><p>Periksa apakah aplikasi bisa dibuka dan fungsi utamanya berjalan normal. Jangan pasang APK yang tidak dipercaya.</p><a href="https://support.google.com/googleplay/answer/2812853" target="_blank" rel="noopener">TIPS KEAMANAN ANDROID ↗</a></div></section>
+  </div>
+  <div class="foot">ANKRAIXMOTION © · APK INSPECTOR · Laporan ini adalah alat bantu, bukan sertifikat keamanan resmi.</div>
+</div>
+<script>
+const input=document.getElementById('apkfile'), zone=document.getElementById('dropzone');
+input.addEventListener('change',()=>{if(input.files&&input.files[0]) inspectFile(input.files[0]);});
+zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag')});
+zone.addEventListener('dragleave',()=>zone.classList.remove('drag'));
+zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag');const f=e.dataTransfer.files[0];if(f&&f.name.toLowerCase().endsWith('.apk'))inspectFile(f);else alert('Pilih file dengan ekstensi .apk');});
+function fmtSize(bytes){if(bytes<1024)return bytes+' B';if(bytes<1048576)return (bytes/1024).toFixed(1)+' KB';return (bytes/1048576).toFixed(2)+' MB';}
+async function inspectFile(file){
+ if(!file.name.toLowerCase().endsWith('.apk')){alert('Pilih file APK yang valid.');return;}
+ document.getElementById('results').style.display='block';
+ document.getElementById('fileMeta').style.display='block';
+ document.getElementById('fileMeta').textContent='Dipilih: '+file.name+' · '+fmtSize(file.size);
+ document.getElementById('fileName').textContent=file.name;
+ document.getElementById('fileInfo').textContent='File APK · '+new Date(file.lastModified).toLocaleDateString('id-ID');
+ document.getElementById('sizeTitle').textContent=fmtSize(file.size);
+ document.getElementById('scanTime').textContent='Diperiksa '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+ document.getElementById('abiTitle').textContent='Memeriksa isi ZIP…';
+ document.getElementById('abiDesc').textContent='Membaca daftar file di dalam APK.';
+ document.getElementById('statAbi').textContent='Sedang dianalisis';
+ document.getElementById('abiNotice').textContent='Pemeriksaan lokal ini hanya membaca nama file di arsip APK. Tidak menjalankan aplikasi dan tidak memindai virus.';
+ try{
+  const bytes=new Uint8Array(await file.arrayBuffer());
+  const decoder=new TextDecoder('latin1'); let text=decoder.decode(bytes);
+  const found=[];
+  for(const abi of ['arm64-v8a','armeabi-v7a','x86_64','x86','mips']){
+   if(text.includes('lib/'+abi+'/')||text.includes('lib\\'+abi+'\\'))found.push(abi);
+  }
+  if(found.length){
+   document.getElementById('abiTitle').textContent=found.join(', ');
+   document.getElementById('abiDesc').textContent='Folder ABI yang terdeteksi dari nama file di dalam arsip. Ini indikasi awal, bukan uji kompatibilitas lengkap.';
+   document.getElementById('statAbi').textContent=found.includes('arm64-v8a')&&found.includes('armeabi-v7a')?'32-bit + 64-bit':found.join(', ');
+   document.getElementById('abiNotice').textContent='Terlihat nama folder ABI: '+found.join(', ')+'. Untuk memastikan dukungan, verifikasi isi ZIP/Native Libraries dengan APK Analyzer. Aplikasi tanpa native libraries mungkin tidak menampilkan ABI.';
+  }else{
+   document.getElementById('abiTitle').textContent='Tidak terdeteksi dari pembacaan awal';
+   document.getElementById('abiDesc').textContent='Bisa jadi APK tidak menyertakan pustaka native, atau nama folder tidak terbaca oleh pemeriksaan sederhana ini.';
+   document.getElementById('statAbi').textContent='Perlu analisis lanjut';
+  }
+ }catch(e){
+  document.getElementById('abiTitle').textContent='Tidak dapat dibaca';
+  document.getElementById('abiDesc').textContent='Coba file APK lain atau gunakan alat analisis tambahan.';
+  document.getElementById('statAbi').textContent='Perlu diperiksa';
+ }
+ document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>

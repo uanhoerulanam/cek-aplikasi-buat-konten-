@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APK Security Report - Pro</title>
+<title>APK Security Report - Advanced</title>
 <style>
     :root {
         --bg-color: #0b1120;
@@ -11,8 +11,10 @@
         --border-color: #1f2937;
         --text-main: #f3f4f6;
         --text-muted: #9ca3af;
-        --accent-cyan: #22d3ee;
+        --accent-cyan: #06b6d4;
+        --accent-glow: #22d3ee;
         --accent-green: #34d399;
+        --shield-red: #ef4444;
         --status-bg: #1f2937;
     }
 
@@ -28,315 +30,248 @@
         color: var(--text-main);
         display: flex;
         justify-content: center;
-        padding: 20px;
+        padding: 15px;
         min-height: 100vh;
     }
 
     .container {
         width: 100%;
-        max-width: 480px; 
+        max-width: 460px; 
+        margin-top: 10vh; /* Agak ke tengah layar */
+        transition: all 0.3s ease;
     }
 
-    /* Bagian Upload */
+    /* ----------------------------------
+       HALAMAN UPLOAD (Awal)
+       ---------------------------------- */
     .upload-section {
         background: var(--card-bg);
-        border: 2px dashed var(--border-color);
-        border-radius: 16px;
-        padding: 40px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 50px 20px;
         text-align: center;
         cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 50px;
-    }
-
-    .upload-section:hover {
-        border-color: var(--accent-cyan);
-        background: #172033;
-    }
-
-    .upload-icon {
-        font-size: 40px;
-        margin-bottom: 10px;
-        color: var(--accent-cyan);
-    }
-
-    .upload-text {
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 5px;
-    }
-
-    .upload-subtext {
-        font-size: 13px;
-        color: var(--text-muted);
-    }
-
-    /* Bagian Laporan */
-    .report-section {
-        display: none;
-        background: var(--card-bg);
-        border-radius: 16px;
-        border: 1px solid var(--border-color);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        position: relative;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Animasi Kotak Upload */
+    .upload-section::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, transparent, var(--shield-red), transparent);
+        opacity: 0.5;
+    }
+    .upload-section:hover { background: #151e32; }
+
+    /* Logo Shield Animasi */
+    .shield-wrapper {
+        position: relative; display: inline-flex; align-items: center; justify-content: center;
+        width: 70px; height: 70px; margin-bottom: 25px;
+    }
+    .pulse-ring {
+        position: absolute; width: 100%; height: 100%; border-radius: 50%;
+        background: rgba(239, 68, 68, 0.3);
+        animation: radar-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        z-index: 1;
+    }
+    @keyframes radar-ping {
+        75%, 100% { transform: scale(2.2); opacity: 0; }
+    }
+    .shield-icon {
+        width: 50px; height: 50px; color: var(--shield-red); z-index: 2;
+        filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.6));
+    }
+
+    .upload-text { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: #fff; }
+    .upload-subtext { font-size: 13px; color: var(--text-muted); }
+
+
+    /* ----------------------------------
+       HALAMAN LAPORAN / SCANNING
+       ---------------------------------- */
+    .report-section {
+        display: none; background: var(--card-bg); border-radius: 20px;
+        border: 1px solid var(--border-color); overflow: hidden;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+        margin-top: 0; /* Reset margin di laporan */
     }
 
     .report-header {
-        padding: 20px;
-        border-bottom: 1px solid var(--border-color);
-        display: flex;
-        align-items: center;
-        gap: 12px;
+        padding: 20px; border-bottom: 1px solid var(--border-color);
+        display: flex; align-items: center; gap: 12px; background: #0f1523;
     }
-
     .header-icon {
-        width: 36px;
-        height: 36px;
-        background: rgba(34, 211, 238, 0.1);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--accent-cyan);
-        font-size: 18px;
+        width: 36px; height: 36px; background: rgba(239, 68, 68, 0.1);
+        border-radius: 10px; display: flex; align-items: center; justify-content: center;
+        color: var(--shield-red); font-size: 18px; border: 1px solid rgba(239, 68, 68, 0.2);
     }
+    .header-titles h1 { font-size: 15px; font-weight: 700; color: var(--text-main); }
+    .header-titles p { font-size: 11px; color: var(--accent-cyan); letter-spacing: 1px; font-weight: 600; }
 
-    .header-titles h1 {
-        font-size: 16px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        color: var(--accent-cyan);
-    }
-
-    .header-titles p {
-        font-size: 11px;
-        color: var(--text-muted);
-        letter-spacing: 1px;
-    }
-
-    /* Detail File APK (Desain Baru) */
-    .file-info {
-        padding: 20px;
-        background: #0f1523;
-        border-bottom: 1px solid var(--border-color);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .file-name {
-        font-size: 15px;
-        font-weight: 600;
-        word-break: break-all;
-        color: #fff;
-    }
-
-    .file-meta-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        font-size: 12px;
-    }
-
-    .meta-badge {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 6px 10px;
-        border-radius: 6px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        color: var(--text-muted);
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-    
-    .meta-badge span {
-        color: #fff;
-        font-weight: 600;
-    }
-
-    /* List Hasil Scan */
-    .scan-list {
-        padding: 10px 20px 20px;
-    }
-
-    .scan-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px 0;
+    /* Visualisasi Laser Scan */
+    .active-scan-container {
+        padding: 25px 20px; text-align: center; background: radial-gradient(circle at top, #152336 0%, var(--card-bg) 70%);
         border-bottom: 1px solid rgba(255,255,255,0.05);
     }
+    .file-box-visual {
+        width: 60px; height: 75px; border: 2px solid var(--border-color); border-radius: 8px;
+        margin: 0 auto 15px; position: relative; overflow: hidden; background: #0b1120;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .file-box-visual svg { width: 30px; height: 30px; color: var(--text-muted); opacity: 0.5;}
     
-    .scan-item:last-child {
-        border-bottom: none;
+    /* Garis Laser */
+    .laser-line {
+        position: absolute; width: 100%; height: 2px; background: var(--accent-glow);
+        box-shadow: 0 0 12px 3px var(--accent-cyan); top: 0; left: 0;
+        animation: scan-laser 1.2s ease-in-out infinite alternate;
+        display: none; /* Disembunyikan sampai scan mulai */
     }
+    @keyframes scan-laser { 0% { top: -2px; } 100% { top: 73px; } }
 
-    .scan-details h3 {
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 4px;
+    .scan-status-text { font-size: 13px; font-weight: 600; color: var(--accent-glow); letter-spacing: 0.5px;}
+
+    /* List Item */
+    .scan-list { padding: 0 20px 10px; }
+    .scan-item {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 16px 0; border-bottom: 1px dashed rgba(255,255,255,0.08); gap: 15px;
     }
+    .scan-item:last-child { border-bottom: none; }
+    
+    .scan-details h3 { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #e5e7eb; }
+    .scan-details p { font-size: 11px; color: var(--text-muted); }
+    .result-text { font-size: 13px; font-weight: 600; color: var(--text-main); text-align: right; word-break: break-all; }
 
-    .scan-details p {
-        font-size: 12px;
-        color: var(--text-muted);
-    }
-
-    /* Badge Status */
+    /* Badge */
     .status-badge {
-        padding: 6px 12px;
-        border-radius: 99px;
-        font-size: 12px;
-        font-weight: 600;
-        background: var(--status-bg);
-        color: var(--text-muted);
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        transition: all 0.3s ease;
+        padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 600;
+        background: var(--status-bg); color: var(--text-muted); display: flex; align-items: center; gap: 6px;
     }
+    .status-info { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255,255,255,0.05); }
+    .status-success { background: rgba(52, 211, 153, 0.1); color: var(--accent-green); border: 1px solid rgba(52, 211, 153, 0.2); }
 
-    /* Animasi Loading */
+    /* Spinner Kecil */
     .loading-spinner {
-        width: 14px;
-        height: 14px;
-        border: 2px solid transparent;
-        border-top-color: var(--accent-cyan);
-        border-right-color: var(--accent-cyan);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        display: inline-block;
+        width: 12px; height: 12px; border: 2px solid rgba(6, 182, 212, 0.3); border-top-color: var(--accent-cyan);
+        border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block;
     }
-
-    @keyframes spin {
-        100% { transform: rotate(360deg); }
-    }
-
-    /* Status Selesai (Sukses) */
-    .status-success {
-        background: rgba(52, 211, 153, 0.1);
-        color: var(--accent-green);
-        border: 1px solid rgba(52, 211, 153, 0.2);
-    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
 
     .report-footer {
-        text-align: center;
-        padding: 20px;
-        font-size: 11px;
-        color: var(--text-muted);
-        letter-spacing: 1px;
-        border-top: 1px solid var(--border-color);
-    }
-
-    .report-footer span {
-        color: var(--accent-cyan);
-        font-weight: 600;
-    }
-
-    .reset-btn {
-        display: none;
-        width: 100%;
-        margin-top: 20px;
-        padding: 14px;
-        background: linear-gradient(135deg, var(--accent-cyan), #0284c7);
-        color: white;
-        border: none;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: 14px;
-        cursor: pointer;
-        transition: opacity 0.2s;
+        text-align: center; padding: 20px; font-size: 10px; color: #6b7280;
+        border-top: 1px solid var(--border-color); background: #0b1120;
     }
     
-    .reset-btn:hover {
-        opacity: 0.9;
+    .reset-btn {
+        display: none; width: 100%; margin-top: 20px; padding: 15px;
+        background: linear-gradient(135deg, var(--accent-cyan), #0284c7);
+        color: white; border: none; border-radius: 14px; font-weight: 600; font-size: 14px;
+        cursor: pointer; transition: 0.2s; box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
     }
+    .reset-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4); }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="mainContainer">
     <!-- Area Upload -->
     <div class="upload-section" id="uploadArea" onclick="document.getElementById('fileInput').click()">
-        <div class="upload-icon">🛡️</div>
+        <div class="shield-wrapper">
+            <div class="pulse-ring"></div>
+            <!-- SVG Tameng HD -->
+            <svg class="shield-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.642 2 6.319 2 7.04c0 5.225 3.364 10.04 8 11.96 4.636-1.92 8-6.735 8-11.96 0-.72-.056-1.398-.166-2.04A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z" clip-rule="evenodd"></path>
+            </svg>
+        </div>
         <div class="upload-text">Pilih File APK</div>
         <div class="upload-subtext">Ketuk untuk memulai proses pemindaian</div>
         <input type="file" id="fileInput" accept=".apk" style="display: none;">
     </div>
 
-    <!-- Area Laporan -->
+    <!-- Area Laporan Terpadu -->
     <div class="report-section" id="reportArea">
         <div class="report-header">
-            <div class="header-icon">🛡️</div>
+            <div class="header-icon">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.642 2 6.319 2 7.04c0 5.225 3.364 10.04 8 11.96 4.636-1.92 8-6.735 8-11.96 0-.72-.056-1.398-.166-2.04A11.954 11.954 0 0110 1.944z" clip-rule="evenodd"></path></svg>
+            </div>
             <div class="header-titles">
                 <h1>APK SECURITY REPORT</h1>
                 <p>ADVANCED SYSTEM SCANNER</p>
             </div>
         </div>
 
-        <!-- Detail APK: Nama, Versi, Size -->
-        <div class="file-info">
-            <div class="file-name" id="displayFileName">nama_aplikasi.apk</div>
-            <div class="file-meta-row">
-                <div class="meta-badge">📦 Versi: <span id="displayFileVersion">--</span></div>
-                <div class="meta-badge">⚖️ Ukuran: <span id="displayFileSize">--</span></div>
+        <!-- Animasi Laser File -->
+        <div class="active-scan-container">
+            <div class="file-box-visual">
+                <div class="laser-line" id="laserLine"></div>
+                <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
             </div>
+            <div class="scan-status-text" id="mainScanStatus">Menyiapkan Mesin Scanner...</div>
         </div>
 
         <div class="scan-list">
-            <!-- Item 1: Arsitektur -->
+            <!-- Info APK Statis -->
+            <div class="scan-item">
+                <div class="scan-details">
+                    <h3>Nama Aplikasi</h3>
+                    <p>File terenkripsi lokal</p>
+                </div>
+                <div class="result-text" id="resName">--</div>
+            </div>
+            <div class="scan-item">
+                <div class="scan-details">
+                    <h3>Ukuran File</h3>
+                    <p>Total data sistem</p>
+                </div>
+                <div class="status-badge status-info" id="resSize">--</div>
+            </div>
+            <div class="scan-item">
+                <div class="scan-details">
+                    <h3>Versi Aplikasi</h3>
+                    <p>Deteksi struktur otomatis</p>
+                </div>
+                <div class="status-badge status-info" id="resVersion">--</div>
+            </div>
+
+            <!-- List Scanning Dinamis -->
             <div class="scan-item">
                 <div class="scan-details">
                     <h3>Architecture CPU</h3>
                     <p>32-bit / 64-bit compatibility</p>
                 </div>
-                <div class="status-badge" id="status1">
-                    <span class="loading-spinner"></span> Scanning...
-                </div>
+                <div class="status-badge" id="status1">Menunggu...</div>
             </div>
-
-            <!-- Item 2: Virus -->
             <div class="scan-item">
                 <div class="scan-details">
                     <h3>Virus Scan</h3>
                     <p>Malware & Trojan detection</p>
                 </div>
-                <div class="status-badge" id="status2">
-                    Menunggu...
-                </div>
+                <div class="status-badge" id="status2">Menunggu...</div>
             </div>
-
-            <!-- Item 3: Stabilitas/Runtime -->
             <div class="scan-item">
                 <div class="scan-details">
                     <h3>Runtime Test</h3>
                     <p>App stability & working status</p>
                 </div>
-                <div class="status-badge" id="status3">
-                    Menunggu...
-                </div>
+                <div class="status-badge" id="status3">Menunggu...</div>
             </div>
-
-            <!-- Item 4: Iklan -->
             <div class="scan-item">
                 <div class="scan-details">
                     <h3>Ads Detection</h3>
                     <p>Hidden ads module</p>
                 </div>
-                <div class="status-badge" id="status4">
-                    Menunggu...
-                </div>
+                <div class="status-badge" id="status4">Menunggu...</div>
             </div>
         </div>
 
         <div class="report-footer">
-            <span>SCAN</span> · ANALYZE · VERIFY<br>
-            <div style="margin-top:4px; font-size:9px; color:#6b7280;">Diproses dan diamankan secara lokal di perangkat Anda.</div>
+            Diproses dan diamankan secara lokal di perangkat Anda.
         </div>
     </div>
 
-    <button class="reset-btn" id="resetBtn" onclick="resetApp()">↻ Scan APK Lain</button>
-
+    <button class="reset-btn" id="resetBtn" onclick="resetApp()">Pindai File APK Lainnya</button>
 </div>
 
 <script>
@@ -344,13 +279,26 @@
     const uploadArea = document.getElementById('uploadArea');
     const reportArea = document.getElementById('reportArea');
     const resetBtn = document.getElementById('resetBtn');
+    const mainContainer = document.getElementById('mainContainer');
+    
+    // Elemen visual atas
+    const laserLine = document.getElementById('laserLine');
+    const mainScanStatus = document.getElementById('mainScanStatus');
 
-    // Data hasil akhir yang selalu aman (Hardcode)
     const finalResults = [
         "Support (64-32 bit)",
         "Tidak Ada (Aman)",
         "Bekerja - Ya",
         "Tidak Ada Iklan"
+    ];
+
+    // Teks yang akan berubah-ubah di bagian atas saat proses scan
+    const scanStatusMessages = [
+        "Mengekstrak kode sumber...",
+        "Memeriksa tanda tangan digital...",
+        "Memindai database malware...",
+        "Menganalisis modul iklan...",
+        "Menyelesaikan laporan keamanan..."
     ];
 
     fileInput.addEventListener('change', function() {
@@ -367,71 +315,69 @@
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    // Fungsi membuat versi acak yang terlihat nyata (misal: v2.1.4)
-    function generateFakeVersion() {
-        const major = Math.floor(Math.random() * 4) + 1; // 1-4
-        const minor = Math.floor(Math.random() * 9);     // 0-8
-        const patch = Math.floor(Math.random() * 9);     // 0-8
+    function extractVersion(filename) {
+        const match = filename.match(/(\d+\.\d+(?:\.\d+)*)/);
+        if (match) return "v" + match[0]; 
+        const major = Math.floor(Math.random() * 4) + 1;
+        const minor = Math.floor(Math.random() * 9);
+        const patch = Math.floor(Math.random() * 9);
         return `v${major}.${minor}.${patch}`;
     }
 
     async function startFakeScan(file) {
-        // Isi Detail File
-        document.getElementById('displayFileName').textContent = file.name;
-        document.getElementById('displayFileSize').textContent = formatBytes(file.size);
-        document.getElementById('displayFileVersion').textContent = generateFakeVersion();
+        // Pindahkan posisi form ke atas
+        mainContainer.style.marginTop = "2vh";
 
-        // Ubah tampilan UI
+        document.getElementById('resName').textContent = file.name;
+        document.getElementById('resSize').textContent = formatBytes(file.size);
+        document.getElementById('resVersion').textContent = extractVersion(file.name);
+
         uploadArea.style.display = 'none';
         reportArea.style.display = 'block';
         resetBtn.style.display = 'none';
 
-        // Reset semua badge ke default (Menunggu)
+        // Aktifkan Laser Animasi
+        laserLine.style.display = 'block';
+        mainScanStatus.style.color = "var(--accent-glow)";
+
         for(let i=1; i<=4; i++) {
-            const badge = document.getElementById('status'+i);
-            badge.className = 'status-badge';
-            if(i === 1) {
-                badge.innerHTML = '<span class="loading-spinner"></span> Scanning...';
-            } else {
-                badge.innerHTML = 'Menunggu...';
-            }
+            document.getElementById('status'+i).className = 'status-badge';
+            document.getElementById('status'+i).innerHTML = 'Menunggu...';
         }
 
-        // Proses simulasi animasi per item
+        // Loop Simulasi per Item
         for (let i = 1; i <= 4; i++) {
             const currentBadge = document.getElementById('status' + i);
             
-            // Set ke state loading
             currentBadge.innerHTML = '<span class="loading-spinner"></span> Scanning...';
             currentBadge.style.color = 'var(--accent-cyan)';
             
-            // Tunggu beberapa detik (acak antara 1 - 2 detik per item)
-            const delay = Math.floor(Math.random() * 1000) + 1000;
+            // Ubah teks status di atas (Scanner Utama)
+            mainScanStatus.textContent = scanStatusMessages[i-1];
+            
+            const delay = Math.floor(Math.random() * 800) + 1200; // 1.2s - 2.0s
             await new Promise(r => setTimeout(r, delay));
 
-            // Set ke state selesai (Sukses)
             currentBadge.className = 'status-badge status-success';
             currentBadge.innerHTML = finalResults[i-1];
             currentBadge.style.color = ''; 
-
-            // Jika bukan item terakhir, aktifkan loading di item berikutnya
-            if (i < 4) {
-                 const nextBadge = document.getElementById('status' + (i+1));
-                 nextBadge.innerHTML = '<span class="loading-spinner"></span> Bersiap...';
-            }
         }
 
-        // Tampilkan tombol reset setelah semua selesai
+        // Matikan Laser dan set ke mode Sukses
+        laserLine.style.display = 'none';
+        mainScanStatus.textContent = "✓ Pemindaian Selesai (Aman)";
+        mainScanStatus.style.color = "var(--accent-green)";
+
         resetBtn.style.display = 'block';
     }
 
     function resetApp() {
+        mainContainer.style.marginTop = "10vh";
         fileInput.value = ''; 
         reportArea.style.display = 'none';
         resetBtn.style.display = 'none';
         uploadArea.style.display = 'block';
     }
 </script>
-
 </body>
 </html>

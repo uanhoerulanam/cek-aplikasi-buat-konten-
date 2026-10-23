@@ -128,11 +128,20 @@
     .app-item {
         display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer;
     }
+    
+    /* Styling gambar dasar */
     .app-item img {
         width: 52px; height: 52px; border-radius: 14px; margin-bottom: 8px; object-fit: contain;
         background: #1a2234; padding: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         border: 1px solid rgba(255,255,255,0.08);
     }
+
+    /* KHUSUS GOJEK: Kita paksa background-nya jadi warna hijau Gojek */
+    .app-item img[alt="Gojek"] {
+        background-color: #00aa13 !important;
+        padding: 8px;
+    }
+
     .app-item span { font-size: 11px; color: #f3f4f6; word-break: break-word; line-height: 1.2; font-weight: 500;}
 
     #scannerScreen {
@@ -292,24 +301,66 @@
 </div>
 
 <script>
-    // URL DIBAWAH INI SUDAH DIGANTI MENJADI FORMAT PNG RESOLUSI TINGGI (ANTI-RUSAK)
+    /*
+      CATATAN PENTING:
+      Beberapa logo di bawah ini menggunakan server gambar pihak ketiga yang sudah 
+      disesuaikan semirip mungkin dengan gambar yang kamu kirim.
+    */
     const appData = [
-        { name: "YouTube", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/512px-YouTube_full-color_icon_%282017%29.svg.png", size: "85.2 MB", version: "v18.43.45" },
-        { name: "WhatsApp", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/512px-WhatsApp.svg.png", size: "45.1 MB", version: "v2.23.23.76" },
-        { name: "Spotify", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/512px-Spotify_logo_without_text.svg.png", size: "32.8 MB", version: "v8.8.82.634" },
-        { name: "Netflix", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/512px-Netflix_2015_logo.svg.png", size: "28.5 MB", version: "v8.91.1" },
-        { name: "TikTok", icon: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a9/TikTok_logo.svg/512px-TikTok_logo.svg.png", size: "112.4 MB", version: "v32.1.3" },
-        { name: "Instagram", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/512px-Instagram_logo_2016.svg.png", size: "54.9 MB", version: "v306.0.0" },
-        { name: "Chrome", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%282020%29.svg/512px-Google_Chrome_icon_%282020%29.svg.png", size: "15.3 MB", version: "v119.0.6045" },
-        { name: "Free Fire", icon: "https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Free_Fire_Logo.png/512px-Free_Fire_Logo.png", size: "350.2 MB", version: "v1.102.1" },
-        { name: "Mobile Legends", icon: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9a/Mobile_Legends_Bang_Bang_logo.png/512px-Mobile_Legends_Bang_Bang_logo.png", size: "520.4 MB", version: "v1.8.30" },
-        { name: "PUBG Mobile", icon: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/PUBG_Mobile_logo.png/512px-PUBG_Mobile_logo.png", size: "780.0 MB", version: "v2.9.0" },
-        { name: "CapCut", icon: "https://cdn.iconscout.com/icon/free/png-256/free-capcut-logo-icon-download-in-svg-png-gif-file-formats--video-editor-apps-pack-logos-icons-5330703.png", size: "125.0 MB", version: "v9.6.0" },
-        { name: "Facebook", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/512px-2021_Facebook_icon.svg.png", size: "65.7 MB", version: "v438.0.0" },
-        { name: "Telegram", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/512px-Telegram_logo.svg.png", size: "38.1 MB", version: "v9.7.0" },
-        { name: "Gmail", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/512px-Gmail_icon_%282020%29.svg.png", size: "29.4 MB", version: "v2023.10.15" },
-        { name: "Shopee", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Shopee_logo.svg/512px-Shopee_logo.svg.png", size: "95.2 MB", version: "v2.98.22" },
-        { name: "Discord", icon: "https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png", size: "88.3 MB", version: "v205.0" }
+        { name: "YouTube", icon: "https://www.google.com/s2/favicons?domain=youtube.com&sz=128", size: "85.2 MB", version: "v18.43.45" },
+        { name: "WhatsApp", icon: "https://img.icons8.com/color/512/whatsapp.png", size: "45.1 MB", version: "v2.23.23.76" },
+        { name: "Spotify", icon: "https://www.google.com/s2/favicons?domain=spotify.com&sz=128", size: "32.8 MB", version: "v8.8.82.634" },
+        { name: "Netflix", icon: "https://www.google.com/s2/favicons?domain=netflix.com&sz=128", size: "28.5 MB", version: "v8.91.1" },
+        { name: "TikTok", icon: "https://www.google.com/s2/favicons?domain=tiktok.com&sz=128", size: "112.4 MB", version: "v32.1.3" },
+        { name: "Instagram", icon: "https://www.google.com/s2/favicons?domain=instagram.com&sz=128", size: "54.9 MB", version: "v306.0.0" },
+        { name: "Chrome", icon: "https://www.google.com/s2/favicons?domain=google.com/chrome&sz=128", size: "15.3 MB", version: "v119.0.6045" },
+        
+        // --- LOGO GAME & APLIKASI YANG KAMU MINTA ---
+        // Gojek: Link logo transparan, background hijau diatur lewat CSS di atas.
+        { name: "Gojek", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gojek_logo_2022.svg/512px-Gojek_logo_2022.svg.png", size: "75.3 MB", version: "v4.45" },
+        
+        // PUBG: Pakai logo karakter helm resolusi tinggi.
+        { name: "PUBG Mobile", icon: "https://cdn.iconscout.com/icon/free/png-256/free-pubg-mobile-logo-icon-download-in-svg-png-gif-file-formats--technology-game-apps-logos-pack-icons-4952527.png", size: "780.0 MB", version: "v2.9.0" },
+        
+        // MLBB: Pakai logo Miya 5v5 resolusi tinggi.
+        { name: "Mobile Legends", icon: "https://cdn.iconscout.com/icon/free/png-256/free-mobile-legends-bang-bang-logo-icon-download-in-svg-png-gif-file-formats--game-apps-logos-pack-icons-4952528.png", size: "520.4 MB", version: "v1.8.30" },
+        
+        // Free Fire: Pakai logo FF Resolusi tinggi.
+        { name: "Free Fire", icon: "https://cdn.iconscout.com/icon/free/png-256/free-free-fire-logo-icon-download-in-svg-png-gif-file-formats--game-apps-logos-pack-icons-4952529.png", size: "350.2 MB", version: "v1.102.1" },
+        
+        // --- SISA APLIKASI ---
+        { name: "CapCut", icon: "https://icon.horse/icon/capcut.com", size: "125.0 MB", version: "v9.6.0" },
+        { name: "Facebook", icon: "https://www.google.com/s2/favicons?domain=facebook.com&sz=128", size: "65.7 MB", version: "v438.0.0" },
+        { name: "Telegram", icon: "https://www.google.com/s2/favicons?domain=telegram.org&sz=128", size: "38.1 MB", version: "v9.7.0" },
+        { name: "Gmail", icon: "https://www.google.com/s2/favicons?domain=mail.google.com&sz=128", size: "29.4 MB", version: "v2023.10.15" },
+        { name: "Shopee", icon: "https://www.google.com/s2/favicons?domain=shopee.co.id&sz=128", size: "95.2 MB", version: "v2.98.22" },
+        { name: "Discord", icon: "https://www.google.com/s2/favicons?domain=discord.com&sz=128", size: "88.3 MB", version: "v205.0" },
+        { name: "Messenger", icon: "https://www.google.com/s2/favicons?domain=messenger.com&sz=128", size: "42.1 MB", version: "v430.0" },
+        { name: "X / Twitter", icon: "https://www.google.com/s2/favicons?domain=x.com&sz=128", size: "38.5 MB", version: "v10.1" },
+        { name: "Canva", icon: "https://www.google.com/s2/favicons?domain=canva.com&sz=128", size: "35.8 MB", version: "v2.150" },
+        { name: "ChatGPT", icon: "https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128", size: "25.4 MB", version: "v1.2023" },
+        { name: "Google Maps", icon: "https://www.google.com/s2/favicons?domain=maps.google.com&sz=128", size: "110.5 MB", version: "v11.100" },
+        { name: "Grab", icon: "https://www.google.com/s2/favicons?domain=grab.com&sz=128", size: "120.8 MB", version: "v5.200" },
+        { name: "Tokopedia", icon: "https://www.google.com/s2/favicons?domain=tokopedia.com&sz=128", size: "85.0 MB", version: "v3.250" },
+        { name: "Lazada", icon: "https://www.google.com/s2/favicons?domain=lazada.co.id&sz=128", size: "90.2 MB", version: "v7.40" },
+        { name: "Call of Duty", icon: "https://www.google.com/s2/favicons?domain=callofduty.com&sz=128", size: "1.2 GB", version: "v1.0.40" },
+        { name: "Roblox", icon: "https://www.google.com/s2/favicons?domain=roblox.com&sz=128", size: "150.5 MB", version: "v2.600" },
+        { name: "Stumble Guys", icon: "https://www.google.com/s2/favicons?domain=stumbleguys.com&sz=128", size: "250.1 MB", version: "v0.60" },
+        { name: "Genshin Impact", icon: "https://www.google.com/s2/favicons?domain=hoyoverse.com&sz=128", size: "3.5 GB", version: "v4.2" },
+        { name: "Clash of Clans", icon: "https://www.google.com/s2/favicons?domain=supercell.com&sz=128", size: "280.4 MB", version: "v15.200" },
+        { name: "Zoom", icon: "https://www.google.com/s2/favicons?domain=zoom.us&sz=128", size: "105.2 MB", version: "v5.16" },
+        { name: "Snapchat", icon: "https://www.google.com/s2/favicons?domain=snapchat.com&sz=128", size: "95.6 MB", version: "v12.50" },
+        { name: "Pinterest", icon: "https://www.google.com/s2/favicons?domain=pinterest.com&sz=128", size: "65.3 MB", version: "v12.5" },
+        { name: "LinkedIn", icon: "https://www.google.com/s2/favicons?domain=linkedin.com&sz=128", size: "80.1 MB", version: "v4.1" },
+        { name: "Reddit", icon: "https://www.google.com/s2/favicons?domain=reddit.com&sz=128", size: "55.4 MB", version: "v2023.45" },
+        { name: "Twitch", icon: "https://www.google.com/s2/favicons?domain=twitch.tv&sz=128", size: "48.2 MB", version: "v18.2" },
+        { name: "Disney+", icon: "https://www.google.com/s2/favicons?domain=disneyplus.com&sz=128", size: "40.5 MB", version: "v3.1" },
+        { name: "Vidio", icon: "https://www.google.com/s2/favicons?domain=vidio.com&sz=128", size: "35.4 MB", version: "v5.8" },
+        { name: "Viu", icon: "https://www.google.com/s2/favicons?domain=viu.com&sz=128", size: "42.1 MB", version: "v3.2" },
+        { name: "eFootball", icon: "https://www.google.com/s2/favicons?domain=konami.com&sz=128", size: "1.5 GB", version: "v7.6" },
+        { name: "Google Drive", icon: "https://www.google.com/s2/favicons?domain=drive.google.com&sz=128", size: "58.3 MB", version: "v2.23" },
+        { name: "Edge", icon: "https://www.google.com/s2/favicons?domain=microsoft.com/edge&sz=128", size: "90.1 MB", version: "v119.0" },
+        { name: "Firefox", icon: "https://www.google.com/s2/favicons?domain=mozilla.org&sz=128", size: "75.5 MB", version: "v120.0" }
     ];
 
     function showScreen(screenId) {
@@ -328,8 +379,10 @@
     appData.forEach(app => {
         const div = document.createElement('div');
         div.className = 'app-item';
-        // Tambahan loading="lazy" agar gambar tidak berat saat dimuat
-        div.innerHTML = `<img src="${app.icon}" alt="${app.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Icon'"><span>${app.name}</span>`;
+        
+        const fallbackIcon = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23374151'/%3E%3Ctext x='50' y='55' font-family='sans-serif' font-size='12' fill='%239ca3af' text-anchor='middle'%3ENo Icon%3C/text%3E%3C/svg%3E";
+        
+        div.innerHTML = `<img src="${app.icon}" alt="${app.name}" loading="lazy" onerror="this.src='${fallbackIcon}'"><span>${app.name}</span>`;
         div.onclick = () => startAppScan(app);
         appGrid.appendChild(div);
     });
